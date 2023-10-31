@@ -1,0 +1,804 @@
+{% extends 'base.html' %} {% block body%}
+ 
+
+<script> 
+var user_ckeck = '{{user.is_authenticated}}'
+
+</script>
+<input type="hidden" value="{{user.is_authenticated}}" id="user_ckeck">
+
+<div class="container3">
+
+    <div class="follow-alert">
+    </div>
+    <input type="hidden" value="{{ get_single_ringtone.id }}" id="download_count">
+    
+
+<div class="single-ringtone-conatiner player">
+
+    
+    <div class="ringtone-bg-image">
+<div class="music-svg">
+    <!-- <div id="div">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+        <div class="line line-4"></div>
+       <div class="line line-5"></div> </div> -->
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <mask id="mask0_1_16" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="10" width="54" height="40">
+        <path d="M5 35C5 34.337 5.26339 33.7011 5.73223 33.2322C6.20107 32.7634 6.83696 32.5 7.5 32.5H12.5V47.5H7.5C6.83696 47.5 6.20107 47.2366 5.73223 46.7678C5.26339 46.2989 5 45.663 5 45V35ZM47.5 32.5H52.5C53.163 32.5 53.7989 32.7634 54.2678 33.2322C54.7366 33.7011 55 34.337 55 35V45C55 45.663 54.7366 46.2989 54.2678 46.7678C53.7989 47.2366 53.163 47.5 52.5 47.5H47.5V32.5Z" fill="#555555"/>
+        <path d="M12.5 45V30C12.5 20.335 20.335 12.5 30 12.5C39.665 12.5 47.5 20.335 47.5 30V45M12.5 32.5H7.5C6.83696 32.5 6.20107 32.7634 5.73223 33.2322C5.26339 33.7011 5 34.337 5 35V45C5 45.663 5.26339 46.2989 5.73223 46.7678C6.20107 47.2366 6.83696 47.5 7.5 47.5H12.5V32.5ZM47.5 32.5H52.5C53.163 32.5 53.7989 32.7634 54.2678 33.2322C54.7366 33.7011 55 34.337 55 35V45C55 45.663 54.7366 46.2989 54.2678 46.7678C53.7989 47.2366 53.163 47.5 52.5 47.5H47.5V32.5Z" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M20 40H25L27.5 32.5L32.5 47.5L35 40H40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </mask>
+        <g mask="url(#mask0_1_16)">
+        <path d="M-5 0H55V60H-5V0Z" fill="white"/>
+        </g>
+        </svg>
+</div>
+
+<div class="big-heart-an">
+    <div id="heartid">
+        <svg width="50" height="50" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.3783 2.85143C20.7425 -0.728842 16.0069 -0.933429 13.1924 2.33997C12.7903 2.80029 12.1649 2.80029 11.8075 2.33997C9.12697 -0.779989 4.70415 -0.779989 2.02365 2.33997C-0.299449 4.94845 -0.656849 9.19364 1.13015 12.3136C1.66625 13.2854 2.38105 14.0526 3.14053 14.6152L12.0308 22.8498C12.3436 23.1567 12.7903 23.1567 13.103 22.8498L21.9487 14.6152C22.7082 14.0526 23.3783 13.3365 23.9144 12.3647C25.5227 9.44938 25.344 5.51107 23.3783 2.85143V2.85143Z" fill="#fff"></path>
+            </svg>
+    </div>
+</div>
+
+
+<div class="ringtone-on-actions">
+    <div class="heart" id="like-ract">
+
+       
+
+        
+<span id="likesvg">
+    {% if like == False %}
+    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.3435 0.000429746C16.3369 0.0107839 15.3044 0.207346 14.2943 0.610534L14.2485 0.629992L14.2026 0.653617C13.5623 0.979701 12.9787 1.38762 12.4599 1.87103C9.66776 -0.543904 5.22253 -0.719174 2.18137 2.02251L2.15078 2.0503L2.12299 2.07949C-0.544841 4.86608 -0.482362 9.15756 1.1168 12.5484L1.1307 12.5748L1.1446 12.6026C3.02801 16.0903 6.54493 19.0537 9.74989 21.4901L9.75822 21.497L9.76516 21.5026C9.97135 21.6537 10.3259 21.9663 10.7352 22.2739C11.1445 22.5815 11.6068 22.9186 12.2834 23.048L12.4348 23.0771L12.5877 23.0646C13.2978 23.0034 13.5763 22.7412 14.0428 22.4476C14.5093 22.1539 15.0256 21.7812 15.5562 21.3733C16.6021 20.5692 17.6843 19.6425 18.3969 18.9816C18.406 18.973 18.4212 18.9608 18.4302 18.9524C18.4317 18.9511 18.4329 18.9495 18.4344 18.9482C19.9355 17.6673 21.4224 16.1907 22.6828 14.4538C22.6832 14.4533 22.6838 14.4529 22.6842 14.4524C22.6866 14.4492 22.6888 14.4459 22.6912 14.4427C24.6902 11.7512 25.66 8.12403 24.5034 4.55049L24.4825 4.48656L24.4547 4.42678C23.1562 1.61941 20.3632 -0.0305911 17.3435 0.000429746ZM17.3796 2.19901C19.5553 2.14897 21.4624 3.31397 22.4091 5.30647C23.2839 8.09599 22.5277 10.9381 20.8984 13.1266L20.8942 13.1321L20.8901 13.1377C19.7551 14.704 18.3805 16.075 16.9557 17.2875L16.9377 17.3042L16.9196 17.3208C16.278 17.9181 15.192 18.8484 14.1999 19.6111C13.7038 19.9925 13.2282 20.3333 12.8588 20.5659C12.7198 20.6533 12.5878 20.713 12.4793 20.7591C12.3654 20.6968 12.2208 20.6091 12.0708 20.4964C11.7687 20.2694 11.447 19.9796 11.0966 19.7209C11.0911 19.7168 11.0853 19.7126 11.0799 19.7084C7.9696 17.3427 4.69343 14.4702 3.11803 11.5742C1.83905 8.84187 1.89487 5.57147 3.70172 3.64989C6.15851 1.46547 9.80845 1.94037 11.6288 4.18216L12.5155 5.27312L13.373 4.15993C13.8663 3.51987 14.4551 3.03055 15.1699 2.65901C15.9191 2.36633 16.6635 2.21547 17.3796 2.19901Z" fill="#D9D9D9"/>
+        </svg>
+        {% else %}
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.3783 2.85143C20.7425 -0.728842 16.0069 -0.933429 13.1924 2.33997C12.7903 2.80029 12.1649 2.80029 11.8075 2.33997C9.12697 -0.779989 4.70415 -0.779989 2.02365 2.33997C-0.299449 4.94845 -0.656849 9.19364 1.13015 12.3136C1.66625 13.2854 2.38105 14.0526 3.14053 14.6152L12.0308 22.8498C12.3436 23.1567 12.7903 23.1567 13.103 22.8498L21.9487 14.6152C22.7082 14.0526 23.3783 13.3365 23.9144 12.3647C25.5227 9.44938 25.344 5.51107 23.3783 2.85143V2.85143Z" fill="#FF473E"/>
+            </svg>
+            
+        {% endif %}
+        
+</span>
+<span id="nol">{{number_of_likes}}</span>
+    </div>
+    <div class="download-c " id="downloadRingtone">
+
+
+        <a href="{{ get_single_ringtone.file.url }}" download="{{ get_single_ringtone.title }}">
+<span><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 13V1M11 13L7 9M11 13L15 9M1 15L1.621 17.485C1.72915 17.9177 1.97882 18.3018 2.33033 18.5763C2.68184 18.8508 3.11501 18.9999 3.561 19H18.439C18.885 18.9999 19.3182 18.8508 19.6697 18.5763C20.0212 18.3018 20.2708 17.9177 20.379 17.485L21 15" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    </span>
+
+ 
+    <span id="downloadCount">
+        {{ get_single_ringtone.downloadsformated }}
+    </span></a>
+    
+    </div>
+
+    <div class="share" id="sharecount" data-share-url="" data-title="" data-des="">
+        <span>
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.4224 5.01023V0L17.738 5.44897L22 9.81787L17.6623 13.5234L12.4224 18V13.0974C3.22305 12.3866 1.90735e-05 17.8437 1.90735e-05 17.8437C1.90735e-05 14.4438 0.27331 10.9153 2.88087 8.24349C5.91193 5.13525 10.3015 4.9153 12.4224 5.01023Z" fill="white"/>
+                </svg>
+                
+        </span>
+
+        <span id="sharenumber">
+            {{ get_single_ringtone.share }}   
+        </span>
+    </div>
+</div>
+        
+            
+
+        <img src="{{ get_single_ringtone.thumb.url }}" alt="">
+        <div class="s-ringtone-up">
+
+
+            <div class="ringtone-info-container">
+                <div class="ringtonetitle">
+                    <h1>{{ get_single_ringtone.title }}</h1>
+                </div>    
+        
+
+
+                <div class="flex vcenter space-between" style="margin-top: 15px;">
+
+               
+                <div class="user-meta flex vcenter">
+
+                    <div class="user-name">
+                        {% if user.id == get_single_ringtone.user.id %}
+                        <a href="/profile">@{{ get_single_ringtone.user.displayName }}</a> 
+        
+                        
+                        {% else %}
+                        <a href="/userprofile/{{get_single_ringtone.user.id}}">@{{ get_single_ringtone.user.displayName }}</a>
+  
+                        {% endif %}
+                        
+                    </div>
+
+
+                    <div class="user-follow">
+                       
+                           
+                        {% if user.id == get_single_ringtone.user.id %}
+                        <span>
+                        <a href="/profile">Profile</a>     
+                    </span>   
+                        
+                        {% else %}
+
+                  
+
+
+
+                        {% if followed == True %}
+                        <span id="fbtn" data-userid="{{get_single_ringtone.user.id}}">
+                            
+                            Following</span>
+
+                        {% else %}
+
+                        
+
+                        <span id="fbtn" data-userid="{{get_single_ringtone.user.id}}">Follow</span>
+                        {% endif %}
+                        {% endif %}
+
+
+                    </div>
+                </div>
+
+                <div class="splayed"> <span id="post{{get_single_ringtone.id}}">{{get_single_ringtone.played}} </span> <span>plays</span>
+                </div>
+            </div>
+        
+        <!-- [ RingtoneInfo END]  -->
+                                    <div class="play-container single-ring-play flex vcenter play-action">
+                                         
+                                            <div class="play-btn">
+        
+        <span class="ring-preloader"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+            <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"></animateTransform>
+                <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"></animate>
+                <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"></animate>
+            </circle>
+        </svg></span>
+        
+        
+        <div class="home-play-btn">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="playIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777">
+            <title id="playIconTitle">Play</title>
+            <path d="M20 12L5 21V3z"></path>
+        </svg>
+        </div>
+        
+        <div class="home-pause-btn">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="pauseIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777">
+            <title id="pauseIconTitle">Pause</title>
+            <rect width="4" height="16" x="5" y="4"></rect>
+            <rect width="4" height="16" x="15" y="4"></rect>
+        </svg>
+        </div>
+        <span class="track">
+        <audio class="audio1" controls="" id="riid" preload="auto" data-id="{{get_single_ringtone.id}}">
+            <source src="{{ get_single_ringtone.file.url }}   " type="audio/mpeg">
+        </audio>
+        </span>
+        
+                                           
+                                        </div>
+        
+        
+                                        <div class="timeline">
+                                            <div class="progress"></div>
+                                        </div>
+                                        
+                                    </div>
+        
+                                  
+                                    
+                                </div>
+    </div>
+<!-- [ RingtoneInfo ]  -->
+
+<div class="origin-info">
+    <div class="title">
+       <a href=""> <span class="flex"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.25 3.75L3.75 11.25M5 3.75H11.25V10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </span> Also Checkout original Full Music ON<span class="flex">
+        <svg width="55" height="13" viewBox="0 0 55 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.1758 2.0094C17.075 1.62099 16.8785 1.26689 16.6058 0.982373C16.333 0.697855 15.9936 0.492845 15.6213 0.387759C14.2582 0 8.77281 0 8.77281 0C8.77281 0 3.2872 0.0117672 1.92434 0.399526C1.55205 0.504629 1.21265 0.709647 0.939929 0.994164C0.66721 1.27868 0.470694 1.63277 0.369949 2.02116C-0.0423366 4.54776 -0.202288 8.39744 0.381228 10.8228C0.481973 11.2112 0.67849 11.5653 0.951208 11.8498C1.22393 12.1344 1.56333 12.3394 1.93562 12.4445C3.29859 12.8322 8.78409 12.8322 8.78409 12.8322C8.78409 12.8322 14.2696 12.8322 15.6326 12.4445C16.0048 12.3394 16.3443 12.1344 16.617 11.8498C16.8897 11.5653 17.0862 11.2112 17.187 10.8228C17.6217 8.29277 17.7557 4.44544 17.1757 2.00951L17.1758 2.0094Z" fill="#FF0000"/>
+            <path d="M7.02679 9.1659L11.5774 6.41617L7.02679 3.66634V9.1659Z" fill="white"/>
+            <path d="M52.7696 3.72517C53.3665 3.72517 53.8171 3.84262 54.1325 4.06586C54.4479 4.28922 54.6732 4.64167 54.8084 5.12357C54.9435 5.60535 54.9998 6.26331 54.9998 7.10943V8.48441H52.105V8.90735L52.1501 10.0707C52.1838 10.3293 52.2402 10.5173 52.3302 10.6348C52.4205 10.7523 52.5668 10.8111 52.7583 10.8111C53.0174 10.8111 53.1977 10.7054 53.2877 10.4939C53.3891 10.2823 53.4341 9.92976 53.4454 9.44797L54.9435 9.542C54.9548 9.61249 54.9548 9.70652 54.9548 9.82397C54.9548 10.5643 54.7632 11.1167 54.369 11.4809C53.9748 11.8451 53.4341 12.0332 52.7245 12.0332C51.8684 12.0332 51.2715 11.7512 50.9335 11.1989C50.5957 10.6466 50.4155 9.7769 50.4155 8.61362V7.19169C50.4537 5.19406 50.7905 3.731 52.7696 3.72517ZM31.9426 3.87792V9.76524C31.9426 10.1178 31.9764 10.3764 32.0552 10.5291C32.2152 10.8558 32.6297 10.7723 32.855 10.6114C32.985 10.5197 33.0899 10.3941 33.1591 10.2471V3.87781H34.8825V11.9039H33.5308L33.3844 10.9168H33.3506C32.9789 11.6571 32.4269 12.0331 31.6948 12.0331C30.568 12.0302 30.2922 11.1831 30.2266 10.3229L30.2223 10.2623C30.2142 10.132 30.2094 10.0015 30.208 9.87092V3.87792H31.9425H31.9426ZM40.8299 3.87792V9.76524C40.8299 10.1178 40.8636 10.3764 40.9425 10.5291C41.1025 10.8558 41.5169 10.7723 41.7422 10.6114C41.8723 10.5197 41.9771 10.3941 42.0463 10.2471V3.87781H43.7697V11.9039H42.418L42.2716 10.9168H42.2379C41.8662 11.6571 41.3141 12.0331 40.5821 12.0331C39.4552 12.0302 39.1794 11.1831 39.1138 10.3229L39.1095 10.2623C39.1014 10.132 39.0966 10.0015 39.0952 9.87092V3.87792H40.8299ZM26.9414 3.72517C27.5046 3.72517 27.9664 3.84262 28.3044 4.0894C28.6422 4.33617 28.9013 4.71228 29.059 5.22925C29.2167 5.74634 29.2956 6.4396 29.2956 7.29748V8.46076C29.2956 9.31865 29.2167 10.0003 29.059 10.5172C28.9013 11.0344 28.6535 11.4104 28.3044 11.6572C27.9553 11.8922 27.4821 12.0214 26.8964 12.0214C26.2881 12.0332 25.815 11.904 25.4659 11.669C25.1167 11.4222 24.8688 11.0461 24.7225 10.5291C24.576 10.012 24.5084 9.33041 24.5084 8.47264V7.30914C24.5084 6.45125 24.5873 5.74622 24.7562 5.22914C24.9252 4.7004 25.1842 4.32429 25.5447 4.0894C25.9051 3.85428 26.3669 3.72506 26.9414 3.72506V3.72517ZM46.4731 0.50532V4.7357H46.4843C46.642 4.4302 46.8448 4.18342 47.1264 3.99537C47.3894 3.81088 47.6993 3.71268 48.0162 3.71341C48.433 3.71341 48.7484 3.83085 48.9849 4.0541C49.2215 4.28922 49.3904 4.65344 49.4917 5.15876C49.59 5.64828 49.6459 6.32528 49.6493 7.17903L49.6494 7.26229V8.53136C49.6494 9.71817 49.503 10.5996 49.2326 11.1636C48.9512 11.7277 48.5231 12.0098 47.9373 12.0098C47.6108 12.0098 47.3178 11.9275 47.0476 11.7748C46.8085 11.6294 46.6103 11.421 46.4729 11.1705L46.4505 11.1283H46.4168L46.2365 11.8922H44.806V0.505432H46.4731V0.50532ZM39.5795 0.916613V2.37362H37.8674V11.9039H36.1779V2.37373H34.4545V0.916725H39.5796L39.5795 0.916613ZM21.0053 0.916613L21.0064 0.921095C21.0228 0.997414 21.2505 2.05366 21.501 3.28429L21.5208 3.38179L21.5507 3.52916L21.5706 3.62812L21.5806 3.67777L21.6006 3.77729L21.6106 3.82716L21.6305 3.92701L21.6595 4.07304C21.8287 4.92521 21.9901 5.77985 22.0867 6.39264H22.1318C22.2243 5.84294 22.3587 5.13948 22.502 4.42123L22.5396 4.23363C22.5585 4.13972 22.5774 4.0458 22.5965 3.95211L22.6259 3.80676C22.8205 2.85494 23.021 1.90443 23.2272 0.955277L23.2304 0.940147L23.2356 0.916613H24.9589L22.9652 8.33166V11.8922H21.2644V8.34331H21.2531L19.2819 0.916501H21.0053V0.916613ZM26.9076 4.97071C26.671 4.97071 26.5133 5.10004 26.412 5.37035C26.3106 5.64054 26.2656 6.05184 26.2656 6.62776V9.13071C26.2656 9.71828 26.3106 10.153 26.4008 10.4117C26.4909 10.6701 26.6599 10.7994 26.9076 10.7994C27.1441 10.7994 27.3131 10.6701 27.4145 10.4117C27.5159 10.153 27.5609 9.71828 27.5609 9.13071V6.62765C27.5609 6.05184 27.5158 5.62878 27.4145 5.37023C27.3131 5.10004 27.1441 4.97071 26.9076 4.97071ZM46.7772 5.20583C46.6399 5.33807 46.5423 5.50113 46.4841 5.70498L46.4731 5.74634V10.3057C46.6127 10.5525 46.811 10.717 47.1601 10.7288C47.3404 10.7288 47.4867 10.6583 47.5995 10.5173C47.7121 10.3764 47.7909 10.1412 47.8359 9.8122C47.8792 9.49639 47.9018 9.06134 47.9035 8.50727V7.39151C47.9035 6.75698 47.8809 6.27519 47.8472 5.93439C47.8021 5.59359 47.7459 5.34681 47.6445 5.20583C47.4485 4.91198 47.025 4.91557 46.7772 5.20583ZM52.7359 4.93552C52.5443 4.94729 52.4091 5.00601 52.3302 5.1118C52.2402 5.22925 52.1838 5.40554 52.1501 5.66408C52.1169 5.91735 52.1055 6.8027 52.105 6.83811V7.41504H53.3665V6.90625V6.916C53.3658 7.09385 53.3623 6.81279 53.3545 6.46773L53.3534 6.42133C53.3464 6.11807 53.336 5.77996 53.3215 5.66408C53.2877 5.39377 53.2313 5.20572 53.1413 5.10004C53.0512 4.99424 52.916 4.93552 52.7358 4.93552H52.7359Z" fill="white"/>
+            </svg>
+            
+       </span>  </a>
+    </div>
+</div>
+
+<div class="squery">
+    <h3>SUGGESTED QUIRIES</h3>
+</div>
+ 
+<div class="tag-container">
+
+    <div class="tags flex flex-wrap">
+       {%for tag in get_single_ringtone.tags.all %}
+        <a href="{% url 'get_ringtone_by_tag'  tag.slug %}">{{tag}}</a> 
+    
+    {% endfor %}</div>
+            </div>
+
+<div class="related-ringtone-con " data-pagnumber="{{pagnumber}}" id="pagen">
+    <div class="most-played-container player">
+        <h3 id="re-item">RELATED RINGTONES</h3>
+
+        <div class="related flex flex-wrap">
+             
+            {% for item in get_reted_category %}
+            <div class="ringtone-container flex flex100 related-ringtone-item vcenter">
+                <div class="single-thum-image play-action">
+                    <!-- <div class="played"> <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#2329D6" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg><span>{{item.played}}</span>
+                    </div> -->
+                   
+                   
+                    <script> token = '{{ csrf_token }}'</script>
+                    <img src="{{item.thumb.url}}" alt="">
+                    <div class="play-btn">
+
+                        <span class="ring-preloader"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+                        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"></animateTransform>
+                        <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"></animate>
+                        <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"></animate>
+                        </circle>
+                        </svg></span>
+                        
+                        
+                        <div class="home-play-btn">
+                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="playIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="playIconTitle">Play</title> <path d="M20 12L5 21V3z"></path> </svg>
+                        </div>
+                        
+                        <div class="home-pause-btn">
+                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="pauseIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="pauseIconTitle">Pause</title> <rect width="4" height="16" x="5" y="4"></rect> <rect width="4" height="16" x="15" y="4"></rect> </svg>
+                        </div>
+                        
+                        
+                        
+                        
+                        <span class="track">
+                        <audio class="audio1" controls="" preload="none" data-id="{{item.id}}">
+                        <source src="{{item.file.url}}" type="audio/mpeg">
+                        </audio>
+                        </span>
+                        </div>
+
+                          <!-- <div class="download-info"> <a href="{{item.get_absolute_url}}"> Download</a></div>   -->
+                        <div class="ring-progress"></div>
+
+                </div>
+
+
+                <div class="left-side">
+
+                    <div class="ringtone-title">
+                    <a href="{{item.get_absolute_url}}">{{item.title}}</a>
+                </div>
+                <div class="ringtone-cat">
+                    <a href="{{item.category.get_absolute_url}}">in {{item.category.name}}</a>
+                     
+                </div>
+
+                <div class="splayed"> <span id="post{{item.id}}">{{item.played}} </span> <span>plays</span>
+                </div>
+                </div>
+                
+                <div class="download-c related-item-dbtn" id="downloadRingtone" >
+
+
+<a href="{{item.get_absolute_url}}"  >
+<span><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 13V1M11 13L7 9M11 13L15 9M1 15L1.621 17.485C1.72915 17.9177 1.97882 18.3018 2.33033 18.5763C2.68184 18.8508 3.11501 18.9999 3.561 19H18.439C18.885 18.9999 19.3182 18.8508 19.6697 18.5763C20.0212 18.3018 20.2708 17.9177 20.379 17.485L21 15" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+
+<!-- <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#fff" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg> -->
+<span id="downloadCount">
+   
+   {{ item.downloadsformated }}
+   
+</span></a>
+
+</div>
+
+                
+            </div>
+
+            {% endfor %}
+
+        </div>
+        
+    </div>
+
+</div>
+ 
+<div style="margin:10px">
+
+
+<div id="content-loader"></div>
+</div>
+
+
+<!--  -->
+
+</div>
+
+
+<!-- Login -->
+
+<div class="single-login">
+
+
+<div class="tab-panel active" id="auth-step1" data-action="login">
+
+    <div class="user-auth-container">
+    
+        <div class="user-auth-heading">
+            <h1>Login</h1>
+            <h2>Create Account & Upload Ringtones</h2>
+            <p style=" display:none;margin: 30px 0;font-weight: 400;color: #ff5722;font-size: 13px;text-align: center;margin-bottom: -12px;" id="error"></p>
+        </div>
+    
+        <div class="user-auth-body">
+             
+            <form id="login" method="post">
+                {% csrf_token %}
+                
+                <div class="user-auth-input" id="mob-number">
+                     
+                    <input type="text" class="input-field" name='email' autocomplete="off" required id="email">
+                    <label class="input-label">Email</label>
+    
+                </div>
+                 <div class="user-auth-input" id="pass" >
+                     
+                    <input type="text" class="input-field" name='password' autocomplete="off" required  id="password">
+                    <label class="input-label">Password</label>
+    
+                </div>
+                
+            
+             
+    
+               
+    
+               
+    
+                <div class="action">
+                    <button class="action-button" id="step1-btn" type="submit">CONTINUE</button>
+                </div>
+    
+                <div class="or-method">
+                    <strong>OR</strong>
+                </div>
+                <div class="createbtn">
+                    <a href="javascript:void(0)">CREATE NEW ACCOUNT</a>
+                       
+                    
+               </div>
+                <div class="google-login">
+                    <button type="button" class="login-with-google-btn">
+                        CONTINUE WITH GOOGLE
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+    
+        <div class="user-auth-footer">
+            <p>By creating an account or logging in, you agree with Laywoon’s <a href="">Terms and
+                    Conditions</a> and <a href=""> Privacy Policy.</a></p>
+        </div>
+    
+    
+    </div>
+        </div>
+
+
+        <div class="tab-panel active" id="auth-step2" data-action="register">
+
+            <div class="user-auth-container">
+            
+                <div class="user-auth-heading">
+                    <h1>SignUp</h1>
+                    <h2>Create Account & Upload Ringtones</h2>
+                    <p style=" display:none;margin: 30px 0;font-weight: 400;color: #ff5722;font-size: 13px;text-align: center;margin-bottom: -12px;" id="serror"></p>
+                </div>
+            
+                <div class="user-auth-body">
+                     
+                    <form id="register" method="post">
+                        {% csrf_token %}
+                        <div class="user-auth-input" id="mob-number">
+                             
+                            <input type="text" class="input-field" name='dname' autocomplete="off" required id="rdname">
+                            <label class="input-label">Display Name</label>
+            
+                        </div>
+                        <div class="user-auth-input" id="mob-number">
+                             
+                            <input type="text" class="input-field" name='email' autocomplete="off" required id="remail">
+                            <label class="input-label">Email</label>
+            
+                        </div>
+                        <div class="user-auth-input" id="mob-number">
+                             
+                            <input type="text" class="input-field" name='password' autocomplete="off" required  id="rpassword">
+                            <label class="input-label">Password</label>
+            
+                        </div>
+                        
+                    
+                     
+            
+                       
+            
+                       
+            
+                        <div class="action">
+                            <button class="action-button" id="step1-btn" type="submit">CONTINUE</button>
+                        </div>
+            
+                        <div class="or-method">
+                            <strong>OR</strong>
+                        </div>
+                        <div class="createbtn">
+                            <a href="javascript:void(0)">LOGIN</a>
+                               
+                            
+                       </div>
+            
+                       
+            
+                        <div class="google-login">
+                            <a href=""> <button type="button" class="login-with-google-btn">
+                                  CONTINUE WITH GOOGLE
+                            </button></a>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="user-auth-footer">
+                    <p>By creating an account or logging in, you agree with Laywoon’s <a href="">Terms and
+                            Conditions</a> and <a href=""> Privacy Policy.</a></p>
+                </div>
+            
+            
+            </div>
+                </div>
+
+    </div>
+<!-- ENDLOGIN -->
+
+<script>
+
+$(".createbtn").click(function(e){
+    if ($('#auth-step1').data('action') == "login"){
+        $('#auth-step1').hide()
+        $('#auth-step2').show()
+        $('#auth-step1').data('action' , 'register')
+    }else{
+        console.log("esle")
+        $('#auth-step1').data('action' , 'login')
+        $('#auth-step1').show()
+        $('#auth-step2').hide()
+    }
+
+})
+ 
+
+
+ 
+var requestSent = false;
+
+
+
+
+$("#fbtn").click(function(e){
+
+    user_ckeck = $("#user_ckeck").val()
+    if (user_ckeck == "True"){
+    userID = $("#fbtn").data('userid')
+
+   
+
+    if(!requestSent){
+        requestSent = true;
+ $.ajax({
+            url: "/addfollow/",
+            type: "POST",
+            
+            data: {
+                userID: userID,
+            },
+            beforeSend: function () {
+                $('#fbtn').html(`<svg style="vertical-align: bottom;margin-bottom: -1.4px;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="22px" height="22px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+               <path opacity="0.2" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+               <path fill="#fff" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                 C22.32,8.481,24.301,9.057,26.013,10.047z">
+                 <animateTransform attributeType="xml"
+                   attributeName="transform"
+                   type="rotate"
+                   from="0 20 20"
+                   to="360 20 20"
+                   dur="0.9s"
+                   repeatCount="indefinite"/>
+                 </path>
+               </svg>`)
+                
+            },
+        
+        success: function (res) {
+            
+            if (res['result'] == true){
+                $("#fbtn").text("Following")
+                user = res['followed']
+                console.log(user)
+                $(".follow-alert").text(`Followed ${user}`).fadeIn()
+
+                
+
+            }else{
+                $("#fbtn").text("Follow")
+                user = res['Unfollowed']
+                $(".follow-alert").text(`Unfollowed ${user}`).fadeIn()
+
+            }
+            setTimeout(function(){
+                    $(".follow-alert").fadeOut()
+                },1000)
+
+
+          console.log(res)
+          
+        },
+        complete: function (res) {
+
+            requestSent = false;}
+      });
+         
+
+}
+
+}else{
+    $(".single-login").show()
+
+   
+   
+}
+})
+
+// $(".single-login").click(function(e){
+//     e.stopPropagation();
+// });
+
+// $(document).click(function(){
+//     $(".single-login").hide();
+// });
+
+$('.single-login').click(function (e) {
+        e.stopPropagation();
+        $('body').addClass('bar');
+
+    });
+ 
+    $('body,html').click(function (e) {
+        
+        $('body').removeClass('bar');
+    });
+
+
+</script>
+   
+<script>
+    $(document).on("submit" , "#login" , function(e){
+        e.preventDefault();
+        email = $("#email").val()
+        password = $("#password").val()
+        dname = $("#dname").val()
+
+        
+        
+        $.ajax({
+                method:"POST",
+                url:"/login/",
+                
+                data:{
+                    email:email,
+                    password:password,
+                    dname:dname,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                beforeSend: function() {
+            $('#step1-btn').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="22px" height="22px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+               <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+               <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                 C22.32,8.481,24.301,9.057,26.013,10.047z">
+                 <animateTransform attributeType="xml"
+                   attributeName="transform"
+                   type="rotate"
+                   from="0 20 20"
+                   to="360 20 20"
+                   dur="0.9s"
+                   repeatCount="indefinite"/>
+                 </path>
+               </svg>`)
+               $('#step1-btn').prop('disabled', true);  
+                }, 
+                success: function(response){
+                    // $("#mob-number").append(response.msg)
+                    var url = "/profile/";
+                    
+                    // console.log(response.Authstatus)
+                    if (response['success']){
+
+                        $("#user_ckeck").val("True")
+                        $(".single-login").hide();
+                        // $(location).attr('href',url);
+                    } else if (response['user_error']) {
+                        $('#error').text(response['user_error']).css('display','block')
+                    } else{
+                        $('#error').text(response['email_error']).css('display','block')
+
+                    }
+                     
+                },
+                complete:function(data){
+                    
+            $('#step1-btn').text("CONTINUE") 
+            $('#step1-btn').prop('disabled', false);  
+                 
+            }
+                
+            })
+    })
+</script>   
+ 
+
+<script>
+    $(document).on("submit" , "#register" , function(e){
+        e.preventDefault();
+        email = $("#remail").val()
+        password = $("#rpassword").val()
+        dname = $("#rdname").val()
+
+        
+        
+        $.ajax({
+                method:"POST",
+                url:"/signup/",
+                
+                data:{
+                    email:email,
+                    password:password,
+                    dname:dname,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                beforeSend: function() {
+            $('#step1-btn').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="22px" height="22px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+               <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+               <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                 C22.32,8.481,24.301,9.057,26.013,10.047z">
+                 <animateTransform attributeType="xml"
+                   attributeName="transform"
+                   type="rotate"
+                   from="0 20 20"
+                   to="360 20 20"
+                   dur="0.9s"
+                   repeatCount="indefinite"/>
+                 </path>
+               </svg>`)
+               $('#step1-btn').prop('disabled', true);  
+                }, 
+                success: function(response){
+                    // $("#mob-number").append(response.msg)
+                    var url = "/signup/";
+                    
+                    // console.log(response.Authstatus)
+                    if (response['success']){
+                        $("#user_ckeck").val("True")
+                        $(".single-login").hide();
+                    } else if (response['UserExists']) {
+                        $('#serror').text(response['UserExists']).css('display','block')
+                    } else if (response['password_error']) {
+                        $('#serror').text(response['password_error']).css('display','block')
+                    }else{
+                        $('#serror').text(response['email_error']).css('display','block')
+
+                    }
+                     
+                },
+                complete:function(data){
+            $('#step1-btn').text("CONTINUE") 
+            $('#step1-btn').prop('disabled', false);  
+                 
+            }
+                
+            })
+    })
+</script>
+
+
+<script>
+    $(document).ready(function () {
+           window.news_index = '/ringtone/{{get_single_ringtone.slug}}/';
+
+           var page = $("#pagen").data('pagnumber')
+           var block_request = false;
+           var end_pagination = false;
+           
+           $(window).on('scroll' ,function () {
+               var margin = $(document).height() - $(window).height() - 200;
+
+               if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+                   block_request = true;
+                   
+                   page += 1;
+
+                   $.ajax({
+                       type: 'POST',
+                       url: `${window.news_index}?page=${page}`,
+                       data: {
+                           "page": page,
+                           csrfmiddlewaretoken: '{{ csrf_token }}'
+                       },
+
+                       beforeSend: function(){
+                           $("#content-loader").css("display","block")
+                       },
+                       success: function (data) {
+                           if (data.end_pagination === true) {
+
+                               
+                               end_pagination = true;
+
+                                
+                           } else {
+                              
+                               block_request = false;
+                           }
+                           $('.related').append(data.content);
+                           console.log(data.content)
+                       },
+                       complete:function(){
+                           $("#content-loader").hide()
+                       }
+                   })
+               }
+           });
+       })
+   </script>
+ 
+{% endblock body %}

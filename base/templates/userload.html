@@ -1,0 +1,269 @@
+{% extends "base.html "%}
+
+{% block body%}
+<div class="container3">
+
+
+<h1 style="text-align: center;">Upload Ringtones Earn Cash</h1>
+<div class="ring-upload-container">
+
+
+
+<form action="" method="post" enctype="multipart/form-data" id="upload">
+    {% csrf_token %}
+
+    <div class="upload-wrap">
+      <label for="" class="upload-label">Title</label>
+      <input type="text" id="title" class="upload-input">
+      
+    </div>
+   
+     
+    <!-- <input type="file" name="file" id="Ringtone__file"> -->
+
+
+    <div class="upload-wrap">
+      <h2 class="upload-label">Choose Category</h2>
+      
+        <div class="select-dropdown">
+          <div href="#" role="button" data-newdata="0" class="select-dropdown__button" > <input type="hidden" id="catid"><span id="itemname">Select Items</span> <i class="zmdi zmdi-chevron-down"></i>
+          </div>
+          <ul class="select-dropdown__list">
+            {%for item in getcat_obj%}
+            <li data-value="{{item.id}}" class="select-dropdown__list-item">{{item.name}}</li>
+           
+            {% endfor %}
+          </ul>
+        </div>
+       
+      
+
+<!--       
+      <select name="category" id="cat">
+        {%for item in getcat_obj%}
+        <option value="{{item.id}}">{{item.name}}</option>
+        {% endfor %}
+      </select> -->
+    </div>
+
+    <div class="upload-wrap">
+
+      <div class="upload-wrap">
+      <div class="input-tags">
+        <span class="tags flex flex-wrap" id="tags_all" ></span>
+      </div>
+    </div>
+
+      <div class="flex">
+        <input type="text" placeholder="Add tags here..." id="tagvalue" class="upload-input">
+        
+
+        <div id="add">Add</div>
+         
+      </div>
+     
+       
+
+    </div>
+
+
+    <div class="upload-wrap">
+    <div class="wrapper flex vcenter">
+      
+      <div><input type="file" name="file" id="Ringtone__file"></div>
+      
+
+      <label for="Ringtone__file" class="uploadbox  flex vcenter center">
+       
+          
+        <span> <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M35.2083 50.6667V40H43.3333L32.5 26.6667L21.6667 40H29.7917V50.6667H35.2083Z" fill="white"/>
+          <path d="M18.9583 50.6667H24.375V45.3333H18.9583C14.4787 45.3333 10.8333 41.744 10.8333 37.3333C10.8333 33.5893 14.0806 29.984 18.0727 29.2933L19.6462 29.0213L20.1662 27.5333C22.0702 22.064 26.7989 18.6667 32.5 18.6667C39.9669 18.6667 46.0417 24.648 46.0417 32V34.6667H48.75C51.7373 34.6667 54.1667 37.0587 54.1667 40C54.1667 42.9413 51.7373 45.3333 48.75 45.3333H40.625V50.6667H48.75C54.7246 50.6667 59.5833 45.8827 59.5833 40C59.5792 37.6096 58.7617 35.2895 57.2615 33.4102C55.7612 31.5309 53.6647 30.2007 51.3067 29.632C50.1231 20.4533 42.1417 13.3333 32.5 13.3333C25.0358 13.3333 18.5521 17.6293 15.5919 24.4C9.77436 26.112 5.41666 31.52 5.41666 37.3333C5.41666 44.6853 11.4914 50.6667 18.9583 50.6667Z" fill="white"/>
+          </svg></span>
+          <h2 id="uploaded-title">Upload Ringtone</h2>
+      </label>
+      
+      <i class="fa fa-times-circle remove"></i>
+    </div>
+
+    
+    </div>
+    <button type="submit" id="uploadbtn" class="action-button">Sumbit</button>
+
+   
+  
+
+
+</form>
+
+
+</div>
+
+<div id="upload__sucess">
+
+</div>
+<div class="related flex flex-wrap player" ></div>
+</div>
+ 
+<script>
+
+  $('.select-dropdown__button').on('click', function(){
+    $('.select-dropdown__list').toggleClass('active');
+  });
+  $('.select-dropdown__list-item').on('click', function(){
+    var itemValue = $(this).data('value');
+  
+    $('.select-dropdown__button span').text($(this).text())
+    icaid = $('#catid').val(itemValue);
+
+     console.log($('#catid').val())
+   
+    $('.select-dropdown__list').toggleClass('active');
+  });
+
+
+
+  
+  </script>
+ 
+<script>
+
+
+let tags = [];
+
+
+$("#Ringtone__file").on('change', function(event){
+    var fileName = $("#Ringtone__file").val().split( '\\' ).pop();
+		if( fileName ){
+
+      console.log(fileName)
+      $("#uploaded-title").text(fileName)
+			// $labelText.text(fileName);
+      // $labelRemove.show();
+    }else{
+      // onsole.log(fileName)
+			// $labelText.text(labelDefault);
+      // $labelRemove.hide();
+    }
+  });
+
+
+
+
+$('#upload').on("submit" , function(e){
+       e.preventDefault()
+       catval = $("#catid").val()
+
+      //  tags = [];
+       console.log(tags)
+       console.log(catval)
+       title = $("#title").val()
+       
+       var data = new FormData()
+       data.append("file", $("#Ringtone__file")[0].files[0])
+       data.append("category", catval)
+       data.append("title", title)
+       data.append("tags", tags)
+       data.append("csrfmiddlewaretoken","{{ csrf_token }}")
+       
+           $.ajax({
+               method:'POST',
+               url: '/upload/',
+   
+               processData: false,
+               contentType: false,
+               mimeType:"multipart/form-data", 
+               dataType:"json",
+               data:data,
+               beforeSend: function() {
+
+                
+
+                 $('#uploadbtn').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                       width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                      <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                        s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                        c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                      <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                        C22.32,8.481,24.301,9.057,26.013,10.047z">
+                        <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 20 20"
+                          to="360 20 20"
+                          dur="0.9s"
+                          repeatCount="indefinite"/>
+                        </path>
+                      </svg>`)
+                      $('#upload').prop('disabled', true);  
+               },
+               success:function(response) {
+                   console.log("ok")
+                   console.log(response.content)
+                   $('.related').append(response.content);
+                   $("#upload")[0].reset();
+                   $("#uploaded-title").text("Upload Ringtone")
+                   $("#tags_all").html(" ")
+                   $("#itemname").text("Click to Select")
+                   $("#catid").removeAttr('value')
+                   $("#upload__sucess").fadeIn().text(`${response.added} Nxt added Successfully and  your total Nxt is ${response.points}`)
+                   
+                  //  setTimeout(function(){
+                    $("#upload__sucess").fadeOut(2000)
+
+                    tags = []
+                  //  }, 2000)
+
+
+
+                   
+                 
+                  
+                   
+               },
+              
+               complete:function(data){
+                   $('#uploadbtn').text("submit") 
+                   $('#uploadbtn').prop('disabled', false);  
+
+                        
+                   }
+   
+                
+           })
+       })
+        
+   
+</script>
+
+<script>
+
+$("#add").on('click', function(evt){
+
+
+  const tag  = $("#tagvalue").val()
+ 
+ 
+
+    const tagTrim = tag.trim() 
+    if(tagTrim != "") {
+      // Add tag
+      $(".input-tags .tags").append("<span class='tag'>"+tagTrim+"</span>");
+
+      tags.push(tagTrim);
+      console.log(tagTrim , tags);
+      $("#tagvalue").val(' ')
+     
+    }else if (tag == "") {  
+      $(".input-tags .tags .tag").last().remove()
+    }
+  
+
+})
+
+ 
+</script>
+
+
+
+{%endblock body%}

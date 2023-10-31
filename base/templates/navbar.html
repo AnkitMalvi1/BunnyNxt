@@ -1,0 +1,296 @@
+{% block body%}
+
+<div class="container3">
+
+
+<div class="search-container1">
+
+    <div class="search-wrap">
+        <div class="nav-container">
+        <div class="search-container">
+            <span id="sicon"><svg xmlns="http://www.w3.org/2000/svg" role="img" width="24px" height="24px"
+                    viewBox="0 0 24 24" aria-labelledby="searchIconTitle" stroke="#bcafd01a" stroke-width="1.125"
+                    stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#111">
+                    <title id="searchIconTitle">Search</title>
+                    <path d="M14.4121122,14.4121122 L20,20" />
+                    <circle cx="10" cy="10" r="6" />
+                </svg></span>
+            <input type="text" placeholder="Search" id="query" name="query">
+        </div>
+
+        <div class="cancel">
+            <button>
+                cancel
+            </button>
+        </div>
+    </div>
+    <div class="search-bar">
+        <div class="ringtone-res-container">
+            <ul id="rres" class="player">
+               
+            </ul>
+        </div>
+        <div class="sug-search">
+            <h3>SUGGESTED SEARCH</h3>
+            <ul class="flex flex-wrap" id="search_items">
+                {% for suggitem in q_obj%}
+                <li><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L16.514 16.506M19 10.5C19 12.7543 18.1045 14.9163 16.5104 16.5104C14.9163 18.1045 12.7543 19 10.5 19C8.24566 19 6.08365 18.1045 4.48959 16.5104C2.89553 14.9163 2 12.7543 2 10.5C2 8.24566 2.89553 6.08365 4.48959 4.48959C6.08365 2.89553 8.24566 2 10.5 2C12.7543 2 14.9163 2.89553 16.5104 4.48959C18.1045 6.08365 19 8.24566 19 10.5V10.5Z" stroke="#bcafd01a" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    </span> <span class="data-qs" data-qs="{{suggitem.query}}"></span> {{suggitem.query}}</li>
+                {% endfor %}
+                
+            </ul>
+
+    </div>
+        <div class="cats-res-container">
+            <h3>Browse</h3>
+            <ul class="flex flex-wrap">
+                {% for catsitem in category_obj_search%}
+                <li>
+                    <a href="{{catsitem.get_absolute_url}}"> 
+                        <img src="{{catsitem.image.url}}" alt="">
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="cats">
+        <div class="cats-item">
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="nav-container">
+    <div class="search-container" id="search_action">
+        <span id="sicon"><svg xmlns="http://www.w3.org/2000/svg" role="img" width="24px" height="24px"
+                viewBox="0 0 24 24" aria-labelledby="searchIconTitle" stroke="#bcafd01a" stroke-width="1.125"
+                stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#111">
+                <title id="searchIconTitle">Search</title>
+                <path d="M14.4121122,14.4121122 L20,20" />
+                <circle cx="10" cy="10" r="6" />
+            </svg></span>
+        <input type="text" placeholder="Search"  name="query">
+    </div>
+    <div class="brand-container">
+
+        <a href="/ringtones"> <img src="/media/bn1.png" alt=""></a>
+
+    </div>
+</div>
+
+</div>
+<script>
+
+
+$("#search_action").click(function(){
+    
+    $(".search-wrap").fadeIn()
+    $("#query").focus()
+});
+
+
+$("#search_items li").click(function(){
+    
+     
+
+    suggqs = $(this).find('.data-qs').data('qs')
+    console.log(suggqs) 
+    query = $("#query").val(suggqs).keyup()
+});
+
+
+$(".cancel").click(function(){
+$(".search-wrap").fadeOut()
+
+$("#query").val("").keyup()
+})
+
+        var requestSent = false;
+    
+$("#query").on("keyup", function (e) {
+        $("#rres").html(" ")
+        query = $("#query").val().trim()
+        console.log(query)
+
+        if (query.length > 5){
+            console.log(query)
+            $.ajax({
+            url: "/suggestedsearch/",
+            type: "POST",
+            
+            data: {
+                search_query: query,
+            },
+        
+        success: function (res) {
+          console.log(res)
+          
+        },
+      });
+        }else{
+            console.log("=======")
+        }
+    if(!requestSent){
+        requestSent = true;
+        
+        $.ajax({
+            method: "POST",
+            url: "/search_ringtone/",
+
+            data: {
+                query: query,
+            },
+            beforeSend: function () {
+                $('#sicon').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="22px" height="22px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+               <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+               <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                 C22.32,8.481,24.301,9.057,26.013,10.047z">
+                 <animateTransform attributeType="xml"
+                   attributeName="transform"
+                   type="rotate"
+                   from="0 20 20"
+                   to="360 20 20"
+                   dur="0.9s"
+                   repeatCount="indefinite"/>
+                 </path>
+               </svg>`)
+                // $('#step1-btn').prop('disabled', true);
+            },
+            success: function (response) {
+                // $("#mob-number").append(response.msg)
+                var url = "/profile/";
+
+                if (response['ringtones']){
+                    rname = response['ringtones']
+
+ 
+
+                    rname.forEach((item) => {
+                           
+                        $("#rres").append(`
+                        
+                        <div class="ringtone-container flex flex100 related-ringtone-item vcenter">
+                <div class="single-thum-image play-action">
+                    
+                   
+                   
+                     
+                    <img src="${item.ringtone_img}" alt="">
+                    <div class="play-btn">
+
+                        <span class="ring-preloader"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+                        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"></animateTransform>
+                        <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"></animate>
+                        <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"></animate>
+                        </circle>
+                        </svg></span>
+                        
+                        
+                        <div class="home-play-btn">
+                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="playIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="playIconTitle">Play</title> <path d="M20 12L5 21V3z"></path> </svg>
+                        </div>
+                        
+                        <div class="home-pause-btn">
+                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="pauseIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="pauseIconTitle">Pause</title> <rect width="4" height="16" x="5" y="4"></rect> <rect width="4" height="16" x="15" y="4"></rect> </svg>
+                        </div>
+                        
+                        
+                        
+                        
+                        <span class="track">
+                        <audio class="audio1" controls="" preload="none" data-id="${item.ringtone_id}">
+                        <source src="${item.ringtone_file}" type="audio/mpeg">
+                        </audio>
+                        </span>
+                        </div>
+                        <div class="ring-progress" style="width: 0;"></div>
+
+                        
+
+                </div>
+
+
+                <div class="left-side">
+
+                    <div class="ringtone-title">
+                    <a href="/ringtone/${item.ringtone_url}">${item.ringtone_name}</a>
+                </div>
+                <div class="ringtone-cat">
+                    <a href="/category/${item.category_url}">in ${item.category_name}</a>
+                     
+                </div>
+
+                <div class="splayed"> <span id="post ">  </span>${item.ringtone_plays} <span>plays</span>
+                </div>
+                </div>
+                
+                <div class="download-c related-item-dbtn" id="downloadRingtone" >
+
+
+<a href="/ringtone/${item.ringtone_url}"  >
+<span><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 13V1M11 13L7 9M11 13L15 9M1 15L1.621 17.485C1.72915 17.9177 1.97882 18.3018 2.33033 18.5763C2.68184 18.8508 3.11501 18.9999 3.561 19H18.439C18.885 18.9999 19.3182 18.8508 19.6697 18.5763C20.0212 18.3018 20.2708 17.9177 20.379 17.485L21 15" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+
+
+<span id="downloadCount">
+    ${item.ringtone_downloads}
+</span></a>
+
+</div>
+
+                
+            </div>`)
+                        
+                        
+                            
+                            
+                        });
+                         
+                        
+                      
+                         
+                      
+                 
+                    
+                }
+                
+                
+
+                
+
+
+            },
+            complete: function (data) {
+
+                requestSent = false;
+                $('#sicon').html(`
+                <svg xmlns="http://www.w3.org/2000/svg" role="img" width="24px" height="24px" viewBox="0 0 24 24" aria-labelledby="searchIconTitle" stroke="#bcafd01a" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#111">
+                    <title id="searchIconTitle">Search</title>
+                    <path d="M14.4121122,14.4121122 L20,20"></path>
+                    <circle cx="10" cy="10" r="6"></circle>
+                </svg>`)
+                
+
+            }
+
+        })
+       
+ 
+    }
+})
+   
+</script>
+
+{% endblock body %}

@@ -1,0 +1,66 @@
+<div class="single-cat">
+             
+    
+     <div class="flex space-between vcenter cat-name-more">
+        <h1>{{ category_ob }}</h1> <a href="{{ category_ob.get_absolute_url }}">MORE</a>
+     </div>
+      
+
+    <div class="cat-ringtone-container flex">
+    {% for ringtone in category_ob.get_products %}
+
+<div class="ringtone-container ">
+<div class="thum-image play-action">
+    <div class="played"> <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#2329D6" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg><span>{{ringtone.played}}</span></div>
+   <script> token = '{{ csrf_token }}'</script>
+    <img src="{{ringtone.thumb.url}}" alt="">
+    <div class="play-btn">
+
+        <span class="ring-preloader"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"></animateTransform>
+        <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"></animate>
+        <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"></animate>
+        </circle>
+        </svg></span>
+        
+        
+        <div class="home-play-btn">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="playIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="playIconTitle">Play</title> <path d="M20 12L5 21V3z"></path> </svg>
+        </div>
+        
+        <div class="home-pause-btn">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="pauseIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="pauseIconTitle">Pause</title> <rect width="4" height="16" x="5" y="4"></rect> <rect width="4" height="16" x="15" y="4"></rect> </svg>
+        </div>
+        
+        
+        
+        
+        <span class="track">
+        <audio class="audio1" controls="" preload="none" data-id="{{ringtone.id}}">
+        <source src="{{ringtone.file.url}}" type="audio/mpeg">
+        </audio>
+        </span>
+        </div>
+
+        <div class="download-info"> <a href="{{ringtone.get_absolute_url}}"> Download</a></div>
+        <div class="ring-progress"></div>
+
+</div>
+<div class="ringtone-title">
+    <a href="{{ringtone.get_absolute_url}}">{{ringtone.title}}</a>
+     
+</div>
+<div class="ringtone-cat">
+    <a href="{{ringtone.category.get_absolute_url}}">in {{ringtone.category.name}}</a>
+     
+</div>
+</div>
+
+
+    
+      
+    {% endfor %}
+</div>
+ 
+</div>

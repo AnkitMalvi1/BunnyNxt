@@ -1,0 +1,855 @@
+{% extends "base.html "%}
+
+{% block body%}
+
+<div class="tost-main">
+
+
+<div class="toast ">
+  
+    <div class="toast-content">
+      <span class="check">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 24 24" aria-labelledby="okIconTitle" stroke="#ffff" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#ffff"> <title id="okIconTitle">Ok</title> <polyline points="4 13 9 18 20 7"></polyline> </svg>
+      </span>
+  
+      <div class="message">
+        <span class="text text-1">Success</span>
+        <span class="text text-2">Your changes has been saved</span>
+      </div>
+    </div>
+    <span class="close">
+
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="26px" height="26px" viewBox="0 0 24 24" aria-labelledby="closeIconTitle" stroke="#808080" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#fff"> <title id="closeIconTitle">Close</title> <path d="M6.34314575 6.34314575L17.6568542 17.6568542M6.34314575 17.6568542L17.6568542 6.34314575"></path> </svg>
+  
+    </span>
+    
+    <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
+    <div class="progress  "></div>
+  </div>
+</div>
+<div class="container3">
+    
+    
+</div>
+
+    {% if user.is_authenticated %}
+    {%endif%}
+<div class="container3">
+
+    <div class="user-profile flex vcenter">
+        <div class="profile-imag">
+            <img src="{{profile.profile_image.url}}" alt="">
+        </div>
+        <div>
+
+        
+        <div class="user-name" style="font-size: 14px;">
+            Hi, {{profile.displayName}}
+            <span>
+                <svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 22 22" aria-labelledby="verifiedIconTitle" stroke="#fff" stroke-width="0.75" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="verifiedIconTitle">Verified</title> <path d="M8 12.5L10.5 15L16 9.5"/> <path d="M12 22C13.2363 22 14.2979 21.2522 14.7572 20.1843C14.9195 19.8068 15.4558 19.5847 15.8375 19.7368C16.9175 20.1672 18.1969 19.9453 19.0711 19.0711C19.9452 18.1969 20.1671 16.9175 19.7368 15.8376C19.5847 15.4558 19.8068 14.9195 20.1843 14.7572C21.2522 14.2979 22 13.2363 22 12C22 10.7637 21.2522 9.70214 20.1843 9.24282C19.8068 9.08046 19.5847 8.54419 19.7368 8.16246C20.1672 7.08254 19.9453 5.80311 19.0711 4.92894C18.1969 4.05477 16.9175 3.83286 15.8376 4.26321C15.4558 4.41534 14.9195 4.1932 14.7572 3.8157C14.2979 2.74778 13.2363 2 12 2C10.7637 2 9.70214 2.74777 9.24282 3.81569C9.08046 4.19318 8.54419 4.41531 8.16246 4.26319C7.08254 3.83284 5.80311 4.05474 4.92894 4.92891C4.05477 5.80308 3.83286 7.08251 4.26321 8.16243C4.41534 8.54417 4.1932 9.08046 3.8157 9.24282C2.74778 9.70213 2 10.7637 2 12C2 13.2363 2.74777 14.2979 3.81569 14.7572C4.19318 14.9195 4.41531 15.4558 4.26319 15.8375C3.83284 16.9175 4.05474 18.1969 4.92891 19.0711C5.80308 19.9452 7.08251 20.1671 8.16243 19.7368C8.54416 19.5847 9.08046 19.8068 9.24282 20.1843C9.70213 21.2522 10.7637 22 12 22Z"/> </svg>
+                    
+            </span>
+
+        </div>
+        <div class="user-bio">
+
+            {{profile.bio |safe}}
+        </div>
+        <div class="user-social-media flex vcenter">
+            
+<a href="{{profile.insta}}" id="insta"> 
+    </a>
+             
+            {% if profile.youtube %}
+            <a href="{{profile.youtube}}" id="youtube">
+                
+                 
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+<div class="user-nxt">
+   Nxt {{user.points}}
+</div>
+    
+    </div>
+    <div id="profiledit">
+        EDIT PROFILE
+    </div>
+<div>
+
+  
+<div class="edit-layout-main">
+
+    <!-- <div class="donload">
+        <a href=""></a>
+    </div> -->
+
+    <div class="image-container">
+        <div id="picactions">
+            <button id="savepic" class="action-button">Save</button>
+            <button id="cancelpic" class="action-button">Cancel</button>
+            
+        </div>
+        <div id="imagebox">
+         
+        </div>
+        
+    
+    </div>
+   
+      
+      
+<label for="piceimage">
+    <div class="profile-imag">
+        <img src="{{profile.profile_image.url}}" alt="">
+
+        <div id="picedit">edit</div>
+        <input type="file" name="" id="piceimage" accept="image/*">
+    </div>
+</label>
+    <div class="edit-layout-items">
+
+    
+    <div class="edit-layout-wrap">
+
+        <label for="" class="upload-label">Name</label>
+        <input type="text"  class="upload-input" value="{{user.displayName}}" disabled id="name">
+        
+      </div>
+      <div class="edit-layout-wrap">
+
+        <label for="" class="upload-label">Paytm Number</label>
+        <input type="text" id="number" class="upload-input" value="{{user.paytm_num}}" disabled>
+        
+      </div>
+      <div class="edit-layout-wrap">
+
+        <label for="" class="upload-label">Bio</label>
+        <input type="text" id="bio" class="upload-input" value="{{user.bio}}" disabled>
+        
+      </div>
+      <div class="edit-layout-wrap">
+
+        <label for="" class="upload-label">Instagram</label>
+        <input type="url" id="instaurl" class="upload-input" value="{{user.insta}}" disabled>
+        
+      </div>
+      <div class="edit-layout-wrap">
+
+        <label for="" class="upload-label">Youtube</label>
+        <input type="url" id="youtubeurl" class="upload-input" value="{{user.youtube}}" disabled>
+        
+      </div>
+
+      <button id="userup" class="action-button">Save</button>
+      <button id="userupcancel" class="action-button">Cancel</button>
+    
+    </div>
+
+    <div class="singedit">
+         
+
+        <div class="edit-layout">
+           
+                <label for="displayname" class="upload-label">Name</label> 
+       
+            
+            <input type="text" id="displayname" class="upload-input" value="{{user.displayName}}">
+            
+          </div>
+        <input type="hidden" value="" >
+          
+<div id="cansave"> 
+          <div id="cancelbtn"> <svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24" aria-labelledby="closeIconTitle" stroke="#808080" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#fff"> <title id="closeIconTitle">Close</title> <path d="M6.34314575 6.34314575L17.6568542 17.6568542M6.34314575 17.6568542L17.6568542 6.34314575"/> </svg></div>
+          <div id="actionbtn"  > <svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24" aria-labelledby="okIconTitle" stroke="#00ffff" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#ffff"> <title id="okIconTitle">Ok</title> <polyline points="4 13 9 18 20 7"/> </svg> </div>
+         
+         
+         </div>
+          
+              
+    </div>
+
+</div>
+
+
+
+<div class="user-profile-info">
+    <div class="user-posts tab-link active" data-tab="1">
+        <div class="user-post-count mb5">
+            {{postscount}}
+        </div>
+        <div>
+            Ringtones
+        </div>
+    </div>
+    <div class="user-followers tab-link" data-tab="2">
+        <div class="user-followers-count mb5">
+            {{followingcount}}
+        </div>
+        <div>
+            Followers
+        </div>
+
+    </div>
+
+    <div class="user-following tab-link" data-tab="3">
+        <div class="user-following-count mb5">
+            {{emcount}} 
+        </div>
+        <div>
+            Following
+        </div>
+
+    </div>
+    <div class="user-following tab-link" data-tab="4">
+        <div class="user-following-count mb5">
+            {{emcount}} 
+        </div>
+        <div>
+            Liked
+        </div>
+
+    </div>
+</div>
+
+ 
+
+
+
+<div class="content-wrapper">
+
+    <div id="tab-1" class="tab-content active">
+        <div class="user-upload-ringtones">
+            <div class="most-played-container player">
+                 
+        
+                <div class="related flex flex-wrap">
+                     
+                    {% for item in posts %}
+                    <div class="ringtone-container flex flex100 related-ringtone-item vcenter">
+                        <div class="single-thum-image play-action">
+                            <!-- <div class="played"> <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#2329D6" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg><span>{{item.played}}</span>
+                            </div> -->
+                           
+                           
+                            <script> token = '{{ csrf_token }}'</script>
+                            <img src="{{item.thumb.url}}" alt="">
+                            <div class="play-btn">
+        
+                                <span class="ring-preloader"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+                                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+                                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"></animateTransform>
+                                <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"></animate>
+                                <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"></animate>
+                                </circle>
+                                </svg></span>
+                                
+                                
+                                <div class="home-play-btn">
+                                <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="playIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="playIconTitle">Play</title> <path d="M20 12L5 21V3z"></path> </svg>
+                                </div>
+                                
+                                <div class="home-pause-btn">
+                                <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="pauseIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="pauseIconTitle">Pause</title> <rect width="4" height="16" x="5" y="4"></rect> <rect width="4" height="16" x="15" y="4"></rect> </svg>
+                                </div>
+                                
+                                
+                                
+                                
+                                <span class="track">
+                                <audio class="audio1" controls="" preload="none" data-id="{{item.id}}">
+                                <source src="{{item.file.url}}" type="audio/mpeg">
+                                </audio>
+                                </span>
+                                </div>
+        
+                                  <!-- <div class="download-info"> <a href="{{item.get_absolute_url}}"> Download</a></div>   -->
+                                <div class="ring-progress"></div>
+        
+                        </div>
+        
+        
+                        <div class="left-side">
+        
+                            <div class="ringtone-title">
+                            <a href="{{item.get_absolute_url}}">{{item.title}}</a>
+                        </div>
+                        <div class="ringtone-cat">
+                            <a href="{{item.category.get_absolute_url}}">in {{item.category.name}}</a>
+                             
+                        </div>
+        
+                        <div class="splayed"> <span id="post{{item.id}}">{{item.played}} </span> <span>plays</span>
+                        </div>
+                        </div>
+                        
+                        <div class="download-c related-item-dbtn" id="downloadRingtone" >
+        
+        
+        <a href="{{item.get_absolute_url}}"  >
+        <span><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 13V1M11 13L7 9M11 13L15 9M1 15L1.621 17.485C1.72915 17.9177 1.97882 18.3018 2.33033 18.5763C2.68184 18.8508 3.11501 18.9999 3.561 19H18.439C18.885 18.9999 19.3182 18.8508 19.6697 18.5763C20.0212 18.3018 20.2708 17.9177 20.379 17.485L21 15" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        </span>
+        
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#fff" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg> -->
+        <span id="downloadCount">
+            {{ item.downloadsformated }}
+        </span></a>
+        
+        </div>
+        
+                        
+                    </div>
+        
+                    {% endfor %}
+        
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-2" class="tab-content">
+        <div class="user-followers-container">
+            
+            {% if followingcount == 0 %}
+            <div class="following-items">
+ 
+                <div class="following-name">
+                   Not Found!
+                </div>
+         
+            </div>
+
+            {% else %}
+
+            {% for emitem in em%}
+             
+                <div class="following-item flex vcenter">
+              
+                    <div class="following-img">
+                        <a href="/userprofile/{{emitem.id}}">
+                        <img src="{{emitem.profile_image.url}}" alt="">
+                    </a>
+                    </div>
+                    <div class="following-name">
+                        {{emitem.displayName}}
+                    </div>
+                    
+    
+     
+    
+                    <div class="following-btn" id="fbtn" data-userid="{{emitem.id}}">
+                        <a href="/userprofile/{{emitem.id}}">Profile</a>
+                    </div>
+    
+             
+                
+             
+               
+            </div>
+            {% endfor %}
+
+            {% endif %}
+
+
+
+        </div>
+        
+         
+    </div>
+
+    <div id="tab-3"class="tab-content">
+        <div class="user-following-container">
+            {% if emcount == 0 %}
+            <div class="following-items">
+ 
+                <div class="following-name">
+                   Not Found!
+                </div>
+         
+            </div>
+
+            {% else %}
+
+            {% for userfoingitem in userfoing%}
+             
+                <div class="following-item flex vcenter">
+              
+                    <div class="following-img">
+                        <a href="/userprofile/{{userfoingitem.id}}">
+                        <img src="{{userfoingitem.profile_image.url}}" alt="">
+                    </a>
+                    </div>
+                    <div class="following-name">
+                        {{userfoingitem.displayName}}
+                    </div>
+                    
+    
+     
+    
+                    <div class="following-btn" id="fbtn" data-userid="{{userfoingitem.id}}">
+                        <a href="/userprofile/{{userfoingitem.id}}">Profile</a>
+                    </div>
+    
+             
+                
+             
+           
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="tab-4" class="tab-content ">
+        <div class="user-upload-ringtones">
+            <div class="most-played-container player">
+                 
+        
+                <div class="related flex flex-wrap">
+                     
+                    {% for item in post_obj %}
+                    <div class="ringtone-container flex flex100 related-ringtone-item vcenter">
+                        <div class="single-thum-image play-action">
+                            <!-- <div class="played"> <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#2329D6" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg><span>{{item.played}}</span>
+                            </div> -->
+                           
+                           
+                            <script> token = '{{ csrf_token }}'</script>
+                            <img src="{{item.thumb.url}}" alt="">
+                            <div class="play-btn">
+        
+                                <span class="ring-preloader"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+                                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+                                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"></animateTransform>
+                                <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"></animate>
+                                <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"></animate>
+                                </circle>
+                                </svg></span>
+                                
+                                
+                                <div class="home-play-btn">
+                                <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="playIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="playIconTitle">Play</title> <path d="M20 12L5 21V3z"></path> </svg>
+                                </div>
+                                
+                                <div class="home-pause-btn">
+                                <svg role="img" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" aria-labelledby="pauseIconTitle" stroke="#fff" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#777"> <title id="pauseIconTitle">Pause</title> <rect width="4" height="16" x="5" y="4"></rect> <rect width="4" height="16" x="15" y="4"></rect> </svg>
+                                </div>
+                                
+                                
+                                
+                                
+                                <span class="track">
+                                <audio class="audio1" controls="" preload="none" data-id="{{item.id}}">
+                                <source src="{{item.file.url}}" type="audio/mpeg">
+                                </audio>
+                                </span>
+                                </div>
+        
+                                  <!-- <div class="download-info"> <a href="{{item.get_absolute_url}}"> Download</a></div>   -->
+                                <div class="ring-progress"></div>
+        
+                        </div>
+        
+        
+                        <div class="left-side">
+        
+                            <div class="ringtone-title">
+                            <a href="{{item.get_absolute_url}}">{{item.title}}</a>
+                        </div>
+                        <div class="ringtone-cat">
+                            <a href="{{item.category.get_absolute_url}}">in {{item.category.name}}</a>
+                             
+                        </div>
+        
+                        <div class="splayed"> <span id="post{{item.id}}">{{item.played}} </span> <span>plays</span>
+                        </div>
+                        </div>
+                        
+                        <div class="download-c related-item-dbtn" id="downloadRingtone" >
+        
+        
+        <a href="{{item.get_absolute_url}}"  >
+        <span><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 13V1M11 13L7 9M11 13L15 9M1 15L1.621 17.485C1.72915 17.9177 1.97882 18.3018 2.33033 18.5763C2.68184 18.8508 3.11501 18.9999 3.561 19H18.439C18.885 18.9999 19.3182 18.8508 19.6697 18.5763C20.0212 18.3018 20.2708 17.9177 20.379 17.485L21 15" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        </span>
+        
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" role="img" width="18px" height="18px" viewBox="0 0 24 24" aria-labelledby="headphonesIconTitle" stroke="#fff" stroke-width="1.125" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="headphonesIconTitle">Headphones</title> <path stroke-linecap="round" d="M21,13 L19,13 C17.8954305,13 17,13.8954305 17,15 L17,17 C17,18.1045695 17.8954305,19 19,19 L19,19 C20.1045695,19 21,18.1045695 21,17 L21,13 C21,8.02943725 16.9705627,4 12,4 C7.02943725,4 3,8.02943725 3,13 L3,17 C3,18.1045695 3.8954305,19 5,19 L5,19 C6.1045695,19 7,18.1045695 7,17 L7,15 C7,13.8954305 6.1045695,13 5,13 L3,13"/> </svg> -->
+        <span id="downloadCount">
+            {{ item.downloadsformated }}
+        </span></a>
+        
+        </div>
+        
+                        
+                    </div>
+        
+                    {% endfor %}
+        
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+    $('.tab-link').click( function() {
+	
+	var tabID = $(this).attr('data-tab');
+	
+	$(this).addClass('active').siblings().removeClass('active');
+	
+	$('#tab-'+tabID).addClass('active').siblings().removeClass('active');
+});
+</script>
+<script>
+
+    $("#profiledit").click(function(){
+        $(".edit-layout-main").show()
+    })
+    $("#userupcancel").click(function(){
+        $(".edit-layout-main").fadeOut(200)
+    })
+    $("#cancelpic").click(function(){
+        $(".image-container").fadeOut(200)
+    })
+
+
+    
+
+
+$(".edit-layout-wrap").click(function(){
+    item = $(this).find('input')
+    value = $(this).find('input').val()
+    label = $(this).find('label').text()
+    labellow= label.toLowerCase().replace(" ", "")
+
+    $(".singedit").fadeIn()
+    $(".singedit input").focus()
+    $(".singedit .edit-layout input").val(value)
+    $(".singedit .edit-layout label").text(label.trim())
+    // console.log(labellow)
+    // ajaxre = $("#actionbtn").attr('data-action', labellow.trim())
+    // $(".singedit input").val(value)
+    $(".edit-layout-main").addClass('editbrur')
+
+     $("#actionbtn").click(function(){
+        console.log("wori")
+
+        
+        $(".singedit").fadeOut(500)
+        $(".edit-layout-main").removeClass('editbrur')
+        openvalue = $(".singedit .edit-layout input").val()
+        item.val(openvalue)
+     })
+
+
+     $("#cancelbtn").click(function(){
+        $(".singedit").fadeOut(500)
+        $(".edit-layout-main").removeClass('editbrur')
+     })
+ 
+    
+   
+})
+
+$("#userup").click(function(e){
+        e.preventDefault();
+
+        name = $("#name").val()
+        number = $("#number").val()
+        bio = $("#bio").val()
+        insta = $("#instaurl").val()
+        console.log(insta)
+        youtube = $("#youtubeurl").val()
+
+        name_val = $(".singedit input").val()
+        // values = $(".singedit input").val()
+        // vnews = $("#actionbtn").data('action')
+   
+        // var data = new FormData()
+        // data.append(labellow, name_val)
+
+        // data.append("csrfmiddlewaretoken","{{ csrf_token }}")
+
+      
+        $.ajax({
+                method:"POST",
+                url:"/profile_update/",
+               
+                data:{
+                    name,
+                    number,
+                    bio,
+                    insta,
+                    youtube,
+                    csrfmiddlewaretoken:"{{ csrf_token }}"
+                }
+                ,
+                beforeSend: function() {
+
+                
+
+                    $('#userup').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                        <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                        s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                        c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                        <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                        C22.32,8.481,24.301,9.057,26.013,10.047z">
+                        <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 20 20"
+                            to="360 20 20"
+                            dur="0.9s"
+                            repeatCount="indefinite"/>
+                        </path>
+                        </svg>`)
+                        $('#userup').prop('disabled', true);  
+                    },
+
+               
+                
+                success: function(response){
+
+                    if (response.error_msg){
+                        text = $("#profile___error").text() 
+                        console.log(text)
+                        if ($("#profile___error").text().length  == 0){
+                            $(".edit-layout-items").prepend(`<div id="profile___error"> ${response.error_msg}</div>`)
+                        }else{
+                            $("#profile___error").text(response.error_msg)
+                        }
+                       
+
+                    }else{
+                        
+                    $("#profile___error").remove()
+                    $(".edit-layout-main").fadeOut(200)
+                    $(".toast").addClass("active");
+                    $(".progress").addClass("active");
+
+                    setTimeout(function(){
+                       $(".toast").removeClass("active");
+                    },5000)
+                    setTimeout(function(){
+                       $(".progress").removeClass("active");
+                    },5300)
+
+                    }
+                      
+                },
+
+                complete:function(){
+                    $('#userup').text('Save'); 
+                    $('#userup').prop('disabled', false); 
+                }
+            
+            })
+                
+            
+    })
+
+    //  $("#saveprofile").on("click" , function(e){
+    //     e.preventDefault();
+    //     email = $("#remail").val()
+    //     password = $("#rpassword").val()
+    //     dname = $("#rdname").val()
+
+        
+        
+    //     $.ajax({
+    //             method:"POST",
+    //             url:"/signup/",
+                
+    //             data:{
+    //                 email:email,
+    //                 password:password,
+    //                 dname:dname,
+    //                 csrfmiddlewaretoken: '{{ csrf_token }}'
+    //             },
+    //             beforeSend: function() {
+    //         $('#step1-btn').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    //             width="22px" height="22px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+    //            <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    //              s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    //              c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+    //            <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    //              C22.32,8.481,24.301,9.057,26.013,10.047z">
+    //              <animateTransform attributeType="xml"
+    //                attributeName="transform"
+    //                type="rotate"
+    //                from="0 20 20"
+    //                to="360 20 20"
+    //                dur="0.9s"
+    //                repeatCount="indefinite"/>
+    //              </path>
+    //            </svg>`)
+    //            $('#step1-btn').prop('disabled', true);  
+    //             }, 
+    //             success: function(response){
+    //                 // $("#mob-number").append(response.msg)
+    //                 var url = "/signup/";
+                    
+    //                 // console.log(response.Authstatus)
+    //                 if (response['success']){
+    //                     $("#user_ckeck").val("True")
+    //                     $(".single-login").hide();
+    //                 } else if (response['UserExists']) {
+    //                     $('#serror').text(response['UserExists']).css('display','block')
+    //                 } else if (response['password_error']) {
+    //                     $('#serror').text(response['password_error']).css('display','block')
+    //                 }else{
+    //                     $('#serror').text(response['email_error']).css('display','block')
+
+    //                 }
+                     
+    //             },
+    //             complete:function(data){
+    //         $('#step1-btn').text("CONTINUE") 
+    //         $('#step1-btn').prop('disabled', false);  
+                 
+    //         }
+                
+    //         })
+    // })
+</script>
+
+
+
+ <script>
+$("#piceimage").on('change', function(){
+
+    imagedata  = this.files[0]
+    url = URL.createObjectURL(imagedata)
+    $(".image-container").show()
+    $("#imagebox").html(`<img src="${url}" id="image" width="400px">`)
+
+
+    var $image = $('#image');
+
+    $image.cropper({
+  aspectRatio: 9 / 9,
+  crop: function(event) {
+    // console.log(event.detail.x);
+    // console.log(event.detail.y);
+    // console.log(event.detail.width);
+    // console.log(event.detail.height);
+    // console.log(event.detail.rotate);
+    // console.log(event.detail.scaleX);
+    // console.log(event.detail.scaleY);
+  }
+});
+
+// Get the Cropper.js instance after initialized
+var cropper = $image.data('cropper');
+
+$("#savepic").on('click', function(){
+    cropper.getCroppedCanvas().toBlob((blob)=>{
+            console.log(blob)
+            fd  = new FormData()
+            fd.append('file' , blob , 'my-image.png')
+            fd.append("csrfmiddlewaretoken","{{ csrf_token }}")
+
+            $.ajax({
+                type:'POST',
+                url: "/profile_pic_update/",
+                data:fd,
+                success: function(response){
+                    console.log(response.file_status)
+                    imageurl = `/media/${response.file_status}`
+                    $(".profile-imag img").attr('src', imageurl)
+                    $(".image-container").hide()
+                },
+                mimeType:"multipart/form-data", 
+                dataType:"json",
+                cache:false,
+                contentType:false,
+                processData:false,
+
+            })
+    })
+})
+
+})
+
+
+
+     $('#profilesubmit').on("submit" , function(e){
+    e.preventDefault()
+    var data = new FormData()
+    data.append("file", $("#propic")[0].files[0])
+    data.append("csrfmiddlewaretoken","{{ csrf_token }}")
+    
+        $.ajax({
+            method:'POST',
+            url: '/profile-pic-update/',
+
+            processData: false,
+            contentType: false,
+            mimeType:"multipart/form-data",
+            data:data,
+            beforeSend: function() {
+              $('#prosubmit').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                   <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                     s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                     c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                   <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                     C22.32,8.481,24.301,9.057,26.013,10.047z">
+                     <animateTransform attributeType="xml"
+                       attributeName="transform"
+                       type="rotate"
+                       from="0 20 20"
+                       to="360 20 20"
+                       dur="0.9s"
+                       repeatCount="indefinite"/>
+                     </path>
+                   </svg>`)
+                   $('#prosubmit').prop('disabled', true);  
+            },
+            success:function(res) {
+                location.reload();
+                // console.log("Refres Done")
+                // console.log(res['file_status']) 
+            // success:function(res){
+            //     // window.location.reload = "/profile/";
+            //     console.log(res['file_status'])
+                 
+            //     // console.log(response['data'] )
+            //     // if (json){
+                     
+            //     //     $(".user_profile_img img").prop("src",`${json['newurl']}`)
+            //     // }
+                 
+               
+                
+            },
+            complete:function(data){
+                $('#prosubmit').text("submit") 
+                $('#prosubmit').prop('disabled', false);  
+                     
+                }
+
+             
+        })
+    })
+
+</script>
+ </script>
+    {% endblock body %}
+
+
+
+  

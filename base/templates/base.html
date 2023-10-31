@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<meta name="theme-color" content="#131017">
+
+<link rel="stylesheet" href="{% static 'style.css' %}?ver=1.4">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js" integrity="sha512-ZK6m9vADamSl5fxBPtXw6ho6A4TuX89HUbcfvxa2v2NYNT/7l8yFGJ3JlXyMN4hlNbz0il4k6DvqbIW5CCwqkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.js" integrity="sha512-7H4tikIFoyAdYD31w/uNYvvAUL6gyunWXLwTQ7ZXkyjD+brw+PfJpLxFkANnbkKnSJzU89YpnF3fJKbpvV+QYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css" integrity="sha512-+VDbDxc9zesADd49pfvz7CgsOl2xREI/7gnzcdyA9XjuTxLXrdpuz21VVIqc5HPfZji2CypSbxx1lgD7BgBK5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
+{% include 'meta.html' %} 
+   
+</head>
+<body>
+ 
+   
+    {% include  'navbar.html' %}
+    {% block body %}
+    
+
+    {% endblock body %}
+  
+  
+    
+
+    
+    <script src="{% static 'audio.js' %}?ver=3.1"></script>
+
+    <!-- <div class="loader-container">
+        <div class="loader"></div>
+      </div> -->
+    
+</body>
+
+ 
+
+
+<script>
+   
+
+
+
+$('#save').click(function(){
+        gamename = $('#gamename').val()
+        bgmiid = $('#bgmiid').val()
+        dob = $('#dob').val() 
+        email = $('#email').val() 
+        bgmiusername = $("#bgmiusername").val()
+        bgmiidlevel = $("#bgmiidlevel").val()
+
+
+
+        $('#verify-bgmiid').hide()
+        $('#verify-dob').hide()
+
+
+        // #verify-bgmiid
+
+
+        $.ajax({
+            method:'POST',
+            url: '/profile-update/',
+
+
+            data:{
+                gamename: gamename,
+                bgmiid: bgmiid,
+                email: email,
+                dob:dob,
+                bgmiusername:bgmiusername,
+                bgmiidlevel:bgmiidlevel,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            beforeSend: function() {
+              $('#response').html("<img src='/images/loading.gif' />");
+            },
+            success:function(res){
+                if (res['bgmiid_er']){
+                    $('#bgmiid').val(res['bgmiid_er']).css('color','#E2373f')
+                }
+                else if (res['newdob_er']) {
+                    $('#verify-dob').text(res['newdob_er']).css('display','flex')
+                } else {
+                    $('#finalerror').text(res['error']) 
+                //     setTimeout(() => {
+                //     $('#finalerror').text(res['error']).hide()
+                // }, 4000);
+                }   
+               
+                
+                 
+                $('#bgmiidlevel').val(res['data']['newbgmiidlevel'])            
+                $('#bgmiusername').val(res['data']['newbgmiusername']) 
+                $('#gamename').val(res['data']['newgamename']) 
+                $('#bgmiid').val(res['data']['newbgmiid'])
+                $('#dob').val(res['data']['newdob'])
+                $('#email').val(res['data']['newgemail'])
+                $('.proupdate').prop("disabled", true);
+                $('.profile-btn').hide()
+                if(res['status']){
+                    $('#finalerror').text(res['error']).hide()
+                    $('#updatemsg').text(res['status']).show()
+                }
+                
+                setTimeout(() => {
+                    $('#updatemsg').text(res['status']).hide()
+                }, 2000);
+               
+                
+            }
+        })
+    })
+</script>
+
+<script>
+
+      
+
+ $('#profilesubmit').on("submit" , function(e){
+    e.preventDefault()
+    var data = new FormData()
+    data.append("file", $("#propic")[0].files[0])
+    data.append("csrfmiddlewaretoken","{{ csrf_token }}")
+    
+        $.ajax({
+            method:'POST',
+            url: '/profile-pic-update/',
+
+            processData: false,
+            contentType: false,
+            mimeType:"multipart/form-data",
+            data:data,
+            beforeSend: function() {
+              $('#prosubmit').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                   <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                     s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                     c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                   <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                     C22.32,8.481,24.301,9.057,26.013,10.047z">
+                     <animateTransform attributeType="xml"
+                       attributeName="transform"
+                       type="rotate"
+                       from="0 20 20"
+                       to="360 20 20"
+                       dur="0.9s"
+                       repeatCount="indefinite"/>
+                     </path>
+                   </svg>`)
+                   $('#prosubmit').prop('disabled', true);  
+            },
+            success:function(res) {
+                location.reload();
+                // console.log("Refres Done")
+                // console.log(res['file_status']) 
+            // success:function(res){
+            //     // window.location.reload = "/profile/";
+            //     console.log(res['file_status'])
+                 
+            //     // console.log(response['data'] )
+            //     // if (json){
+                     
+            //     //     $(".user_profile_img img").prop("src",`${json['newurl']}`)
+            //     // }
+                 
+               
+                
+            },
+            complete:function(data){
+                $('#prosubmit').text("submit") 
+                $('#prosubmit').prop('disabled', false);  
+                     
+                }
+
+             
+        })
+    })
+
+</script>
+
+
+<script>
+    $('#desk-menu-open').on('click', function(){
+        $('.profile-menu').slideToggle()
+         
+    })
+   
+
+
+   
+    $('#regform').on('submit', function(e){
+             
+        $('#userfield').empty()
+            $('#emailfield').empty()
+            $('#passfield').empty()
+            console.log(e)
+            e.preventDefault()
+            userName = $('#username').val()
+            userEmail = $("#email").val()
+            userPassword = $("#pass").val()
+            console.log(userName,userEmail ,userPassword)
+           
+
+            $.ajax({
+                method:'POST',
+                url: '/signup/',
+    
+             data:{
+                username:userName,
+                email:userEmail,
+                pass:userPassword,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+             },
+             beforeSend: function() {
+                $('#btn').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="36px" height="36px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                   <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                     s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                     c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                   <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                     C22.32,8.481,24.301,9.057,26.013,10.047z">
+                     <animateTransform attributeType="xml"
+                       attributeName="transform"
+                       type="rotate"
+                       from="0 20 20"
+                       to="360 20 20"
+                       dur="0.9s"
+                       repeatCount="indefinite"/>
+                     </path>
+                   </svg>`)
+                   $('#btn').prop('disabled', true);  
+            },
+            success: function(res) {
+                if (res['username_error']) {
+                    // $('#rebtn').prop('disabled', true);    
+                    $('#userfield').text(`${res['username_error']}`).show()
+                    // $('#userp').text(`${res['userp']}`)
+                    
+                }else if(res['UserExists']){
+                    $('#emailfield').text(` ${res['UserExists']} `).show()
+                }
+                
+                else if(res['emailError']){
+                    $('#emailfield').text(` ${res['emailError']} `).show()
+                }else if(res['PassError']){
+                    $('#passfield').text(`  ${res['PassError']}`).show()
+                }else if(res['status']){
+                    console.log(res['status'])
+                    window.location.href = "/profile/";
+
+                }
+               },
+               complete:function(data){
+                $('#btn').text("SignUp ") 
+                $('#btn').prop('disabled', false);  
+                     
+                }
+            })
+        })
+</script>
+
+
+</html>

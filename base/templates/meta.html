@@ -1,0 +1,18 @@
+
+ 
+{% if page == "ringtone" %}
+<meta name="google" value="notranslate" />
+<title>{{get_single_ringtone.title }} {{home_data.separator}} {{home_data.name}}</title>
+ 
+<meta name="description" content="{{get_single_ringtone.description }}">
+<link rel="canonical" href="http://127.0.0.1:8000{{ request.path  }}" />
+ 
+
+{% elif page == "home" %}
+<title>{{home_data.title}} {{home_data.separator}} {{home_data.name}}</title>
+<meta name="description" content="{{home_data.description}}">
+<link rel="canonical" href="http://127.0.0.1:8000{{ request.path  }}" />
+{% elif request.path == "/" %}
+ <title>BunnyNXT</title>
+ <meta name="description" content="This is the description ...">
+{% endif %}

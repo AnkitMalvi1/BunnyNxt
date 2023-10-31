@@ -1,0 +1,115 @@
+{% extends "base.html "%}
+
+{% block body%}
+<div class="container3">
+
+
+<div class="category-ringtone-back">
+    <img src="{{category_info.image.url}}" alt="">
+
+
+    <div> 
+    <div class="cat-info-wrap">
+
+    <div>
+
+   
+    <div class="cat-info">
+        <h1>
+            {{category_info.title}}
+        </h1>
+        
+    </div>
+    <div class="cat-des">
+        <p>{{category_info.description}}</p>
+    </div>
+</div>
+
+   
+</div>
+    </div>
+
+
+<div class="totplays">
+    {{ringtones_played}} Plays
+</div>
+</div>
+ 
+<!--  -->
+
+
+
+<div class="related-ringtone-con">
+
+
+
+    <div class="most-played-container player">
+     
+
+        <div class="related flex flex-wrap" data-pagnumber="{{pagnumber}}" id="pagen">
+            {% for item  in get_category %}
+             {% include 'cat-loadmore.html'%}
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+
+<span id="cat-loader"></span>
+ 
+</div>
+
+
+<script>
+     $(document).ready(function () {
+            window.news_index = '/category/{{category_info.slug}}/';
+
+            var page = $("#pagen").data('pagnumber')
+            var block_request = false;
+            var end_pagination = false;
+            
+            $(window).scroll(function () {
+                var margin = $(document).height() - $(window).height() - 200;
+
+                if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+                    block_request = true;
+                    
+                    page += 1;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: `${window.news_index}?page=${page}`,
+                        data: {
+                            "page": page,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+
+                        beforeSend: function(){
+                            $("#cat-loader").css('display','block')
+                        },
+                        success: function (data) {
+                            if (data.end_pagination === true) {
+
+                                
+                                end_pagination = true;
+
+                                 
+                            } else {
+                               
+                                block_request = false;
+                            }
+                            $('.related').append(data.content);
+                        },
+                        complete:function(){
+                            $("#cat-loader").hide()
+                        }
+                    })
+                }
+            });
+        })
+    </script>
+</script>
+
+{%endblock body%}

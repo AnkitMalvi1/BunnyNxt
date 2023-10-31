@@ -1,0 +1,642 @@
+{% extends "base.html "%} {% block body%}
+<h1 style="text-align: center">Welcome to BunnyNext!</h1>
+
+<style>
+  .content .upload .container .ringtone-wrap {
+    padding: 16px;
+    background: #fff;
+    width: 100%;
+    display: none;
+  }
+
+  .content
+    .upload
+    .container
+    .ringtone-wrap
+    .waveform-wrap
+    .waveform-container {
+    display: block;
+    width: 100%;
+    height: 100px;
+  }
+
+  .content .upload .container .ringtone-wrap .waveform-wrap .waveform-bg {
+    clip-path: url(https://mobcup.net/css/styles-698b75c076.css#waveform-mask);
+    fill: #d3d3d3;
+  }
+
+  .content .upload .container .ringtone-wrap .waveform-wrap .draggable {
+    cursor: move;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap .waveform-progress {
+    clip-path: url(#waveform-mask);
+    fill: #2fc2d4;
+  }
+
+  body.light .content .upload .ringtone-wrap .waveform-wrap #line-progress {
+    fill: #2fc2d4;
+    stroke: #2fc2d4;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap #line-progress {
+    fill: #fff;
+    stroke: #fff;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap .draggable {
+    cursor: move;
+  }
+
+  body.light .content .upload .ringtone-wrap .waveform-wrap #left,
+  body.light .content .upload .ringtone-wrap .waveform-wrap #right {
+    fill: #2fc2d4;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap #left,
+  .content .upload .container .ringtone-wrap .waveform-wrap #right {
+    fill: #fff;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap .draggable {
+    cursor: move;
+  }
+
+  body.light .content .upload .ringtone-wrap .waveform-wrap #left,
+  body.light .content .upload .ringtone-wrap .waveform-wrap #right {
+    fill: #2fc2d4;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap #left,
+  .content .upload .container .ringtone-wrap .waveform-wrap #right {
+    fill: #fff;
+  }
+  .content .upload .container .ringtone-wrap .waveform-wrap .draggable {
+    cursor: move;
+  }
+
+  .content .upload .container .ringtone-wrap .controls-wrap {
+    margin-top: 8px;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .content .upload .container .ringtone-wrap {
+    padding: 16px;
+    background: #fff;
+    width: 100%;
+    /* display: none; */
+  }
+
+  .content .upload .container {
+    margin-top: 16px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+</style>
+<body class="light">
+  <!-- 
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <textarea name="title" id="" cols="30" rows="10"></textarea>
+         
+        <input type="file" name="myfile">
+        <select name="category" id="">
+          {%for item in getcat_obj%}
+          <option value="{{item.id}}">{{item.name}}</option>
+          {% endfor %}
+        </select>
+        
+        <button type="submit">Upload</button>
+    
+        {% if uploaded_file_url %}
+        <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+      {% endif %}
+      
+    
+    
+    </form> -->
+
+  <!-- <div class="content">
+    <form action="" method="post" enctype="multipart/form-data" id="upload">
+        {% csrf_token %}
+<div class="upload">
+    <img id="uploadimg" src="/images/uploadimg1.svg" alt="upload image" style="display: none;">
+    <div class="container">
+    <input type="file" id="fileElem" onchange="handleFiles(this.files)" accept="audio/*,image/*">
+    <label class="btn btn-upload" id="fileSelectButton" for="fileElem" style="display: none;">Select file</label>
+    <div class="ringtone-wrap" style="display: block;">
+    <div class="waveform-wrap" style="display: flex;">
+    
+    <svg height="0" width="0">
+    <defs>
+    <clipPath id="waveform-mask"><rect x="0.2" y="39.16669189929962" width="0.6" height="21.666616201400757"></rect><rect x="1.2" y="44.805749505758286" width="0.6" height="10.388500988483429"></rect><rect x="2.2" y="46.29886783659458" width="0.6" height="7.402264326810837"></rect><rect x="3.2" y="47.192297130823135" width="0.6" height="5.615405738353729"></rect><rect x="4.2" y="46.840571239590645" width="0.6" height="6.31885752081871"></rect><rect x="5.2" y="47.94305246323347" width="0.6" height="4.113895073533058"></rect><rect x="6.2" y="42.94412061572075" width="0.6" height="14.111758768558502"></rect><rect x="7.2" y="40.58198779821396" width="0.6" height="18.836024403572083"></rect><rect x="8.2" y="41.97820946574211" width="0.6" height="16.043581068515778"></rect><rect x="9.2" y="43.88714246451855" width="0.6" height="12.225715070962906"></rect><rect x="10.2" y="42.80678704380989" width="0.6" height="14.386425912380219"></rect><rect x="11.2" y="39.82283994555473" width="0.6" height="20.354320108890533"></rect><rect x="12.2" y="39.52604755759239" width="0.6" height="20.947904884815216"></rect><rect x="13.2" y="42.865535616874695" width="0.6" height="14.26892876625061"></rect><rect x="14.2" y="26.27033293247223" width="0.6" height="47.45933413505554"></rect><rect x="15.2" y="28.18918377161026" width="0.6" height="43.62163245677948"></rect><rect x="16.2" y="26.06891095638275" width="0.6" height="47.8621780872345"></rect><rect x="17.2" y="25.07782280445099" width="0.6" height="49.84435439109802"></rect><rect x="18.2" y="25" width="0.6" height="50"></rect><rect x="19.2" y="25.022125244140625" width="0.6" height="49.95574951171875"></rect><rect x="20.2" y="25" width="0.6" height="50"></rect><rect x="21.2" y="25" width="0.6" height="50"></rect><rect x="22.2" y="25" width="0.6" height="50"></rect><rect x="23.2" y="25" width="0.6" height="50"></rect><rect x="24.2" y="25.94607323408127" width="0.6" height="48.10785353183746"></rect><rect x="25.2" y="27.021850645542145" width="0.6" height="45.95629870891571"></rect><rect x="26.2" y="27.31940746307373" width="0.6" height="45.36118507385254"></rect><rect x="27.2" y="26.387828588485718" width="0.6" height="47.224342823028564"></rect><rect x="28.2" y="25.46311914920807" width="0.6" height="49.07376170158386"></rect><rect x="29.2" y="25" width="0.6" height="50"></rect><rect x="30.2" y="25.812555849552155" width="0.6" height="48.37488830089569"></rect><rect x="31.2" y="25" width="0.6" height="50"></rect><rect x="32.2" y="25" width="0.6" height="50"></rect><rect x="33.2" y="25.011444091796875" width="0.6" height="49.97711181640625"></rect><rect x="34.2" y="25" width="0.6" height="50"></rect><rect x="35.2" y="25" width="0.6" height="50"></rect><rect x="36.2" y="25" width="0.6" height="50"></rect><rect x="37.2" y="25" width="0.6" height="50"></rect><rect x="38.2" y="26.752525568008423" width="0.6" height="46.494948863983154"></rect><rect x="39.2" y="25" width="0.6" height="50"></rect><rect x="40.2" y="25" width="0.6" height="50"></rect><rect x="41.2" y="25" width="0.6" height="50"></rect><rect x="42.2" y="25" width="0.6" height="50"></rect><rect x="43.2" y="25" width="0.6" height="50"></rect><rect x="44.2" y="26.15283727645874" width="0.6" height="47.69432544708252"></rect><rect x="45.2" y="25" width="0.6" height="50"></rect><rect x="46.2" y="25" width="0.6" height="50"></rect><rect x="47.2" y="25.4341259598732" width="0.6" height="49.1317480802536"></rect><rect x="48.2" y="26.11621469259262" width="0.6" height="47.76757061481476"></rect><rect x="49.2" y="25.26932656764984" width="0.6" height="49.46134686470032"></rect><rect x="50.2" y="29.272592067718506" width="0.6" height="41.45481586456299"></rect><rect x="51.2" y="25" width="0.6" height="50"></rect><rect x="52.2" y="25" width="0.6" height="50"></rect><rect x="53.2" y="25" width="0.6" height="50"></rect><rect x="54.2" y="25" width="0.6" height="50"></rect><rect x="55.2" y="25" width="0.6" height="50"></rect><rect x="56.2" y="25" width="0.6" height="50"></rect><rect x="57.2" y="25" width="0.6" height="50"></rect><rect x="58.2" y="31.967376172542572" width="0.6" height="36.065247654914856"></rect><rect x="59.2" y="36.150699853897095" width="0.6" height="27.69860029220581"></rect><rect x="60.2" y="33.30790102481842" width="0.6" height="33.38419795036316"></rect><rect x="61.2" y="34.55992341041565" width="0.6" height="30.8801531791687"></rect><rect x="62.2" y="36.35822683572769" width="0.6" height="27.283546328544617"></rect><rect x="63.2" y="25" width="0.6" height="50"></rect><rect x="64.2" y="32.98058956861496" width="0.6" height="34.03882086277008"></rect><rect x="65.2" y="33.77864956855774" width="0.6" height="32.44270086288452"></rect><rect x="66.2" y="25" width="0.6" height="50"></rect><rect x="67.2" y="30.851924419403076" width="0.6" height="38.29615116119385"></rect><rect x="68.2" y="30.61082810163498" width="0.6" height="38.77834379673004"></rect><rect x="69.2" y="25.006866455078125" width="0.6" height="49.98626708984375"></rect><rect x="70.2" y="25" width="0.6" height="50"></rect><rect x="71.2" y="34.09833014011383" width="0.6" height="31.80333971977234"></rect><rect x="72.2" y="28.28836888074875" width="0.6" height="43.4232622385025"></rect><rect x="73.2" y="26.30085200071335" width="0.6" height="47.3982959985733"></rect><rect x="74.2" y="28.61110270023346" width="0.6" height="42.77779459953308"></rect><rect x="75.2" y="26.631976664066315" width="0.6" height="46.73604667186737"></rect><rect x="76.2" y="25" width="0.6" height="50"></rect><rect x="77.2" y="26.4923557639122" width="0.6" height="47.0152884721756"></rect><rect x="78.2" y="25" width="0.6" height="50"></rect><rect x="79.2" y="25" width="0.6" height="50"></rect><rect x="80.2" y="25.39597749710083" width="0.6" height="49.20804500579834"></rect><rect x="81.2" y="29.575487971305847" width="0.6" height="40.849024057388306"></rect><rect x="82.2" y="25" width="0.6" height="50"></rect><rect x="83.2" y="28.225043416023254" width="0.6" height="43.54991316795349"></rect><rect x="84.2" y="29.71205860376358" width="0.6" height="40.57588279247284"></rect><rect x="85.2" y="27.01498419046402" width="0.6" height="45.97003161907196"></rect><rect x="86.2" y="25" width="0.6" height="50"></rect><rect x="87.2" y="28.71639132499695" width="0.6" height="42.5672173500061"></rect><rect x="88.2" y="25" width="0.6" height="50"></rect><rect x="89.2" y="30.56810200214386" width="0.6" height="38.86379599571228"></rect><rect x="90.2" y="25.299081206321716" width="0.6" height="49.40183758735657"></rect><rect x="91.2" y="32.07266479730606" width="0.6" height="35.85467040538788"></rect><rect x="92.2" y="33.09656083583832" width="0.6" height="33.806878328323364"></rect><rect x="93.2" y="25.830866396427155" width="0.6" height="48.33826720714569"></rect><rect x="94.2" y="25" width="0.6" height="50"></rect><rect x="95.2" y="34.883418679237366" width="0.6" height="30.23316264152527"></rect><rect x="96.2" y="31.273841857910156" width="0.6" height="37.45231628417969"></rect><rect x="97.2" y="27.87255495786667" width="0.6" height="44.25489008426666"></rect><rect x="98.2" y="29.312264919281006" width="0.6" height="41.37547016143799"></rect><rect x="99.2" y="28.52870225906372" width="0.6" height="42.94259548187256"></rect></clipPath>
+    </defs>
+    </svg>
+    
+    <svg viewBox="0 0 100 100" id="waveform-container" class="waveform-container" preserveAspectRatio="none">
+    <rect class="waveform-bg" x="0" y="0" height="100" width="100"></rect>
+    <rect id="waveform-progress" class="waveform-progress draggable" x="0" y="0" height="100" width="99.07155797101449"></rect>
+    
+    <line id="line-progress" class="draggable" x1="0" y1="0" x2="0" y2="100"></line>
+    
+    <path id="left" class="draggable" d="M0 0 L4 0 L4 12 L0 32 Z"></path>
+    <path id="right" class="draggable" d="M0 0 L4 0 L4 32 L0 12 Z" transform="translate(95.07155797101449,0)"></path>
+    </svg>
+    </div>
+    <div class="controls-wrap" style="display: flex;">
+    <button id="playToggle" class="btn btn-play">Play</button>
+    <div><span id="duration">35.0</span> Sec</div>
+    </div>
+    </div>
+    <div class="wallpaper-wrap">
+    <img id="wallpaper">
+    </div>
+    <div class="info-wrap" style="display: flex;">
+    <label>Enter title</label>
+    <input type="text" name="title" id="title" maxlength="100" placeholder="Enter title">
+    <label>Enter tags</label>
+    <div class="add-tag-form">
+    <input type="text" name="tag" id="tag" maxlength="100" placeholder="Add a tag (minimum 2)">
+    <button id="addTag">+</button>
+    </div>
+    <div class="tags">
+    </div>
+    <p class="message"></p>
+    <div style="display: flex; margin-left:auto; margin-top: 5px;">
+    <button id="upload" class="btn btn-submit" type="submit">Upload</button>
+    <div class="uploading" style="text-align: center; font-weight: bold; display: none;">
+    <div id="bottom-loader" class="loader"></div>
+    </div>
+    <a class="btn btn-cancel" href="/upload">Cancel</a>
+    </div>
+    </div>
+    </div>
+    </div>
+
+  
+</form>
+
+</div> -->
+</body>
+
+<script>
+  let type = "";
+  let uploadPlayer = document.createElement("audio");
+  let lineProgress = document.getElementById("line-progress");
+  let waveformProgress = document.getElementById("waveform-progress");
+  let leftEle = document.getElementById("left");
+  let rightEle = document.getElementById("right");
+  let left = 0;
+  let right = 100;
+  let startTime = function () {
+    return (left * uploadPlayer.duration) / 100.0;
+  };
+  let endTime = function () {
+    return (right * uploadPlayer.duration) / 100.0;
+  };
+  let rangeWidth = right - left;
+  let maxRangeWidth;
+  let tags = [];
+  let file;
+
+  let wallpaper = {};
+
+  function handleFiles(files) {
+    //init data
+    uploadPlayer.src = null;
+    left = 0;
+    right = 100;
+    rangeWidth = right - left;
+    tags = [];
+
+    file = files[0];
+    let filetype = file.type;
+    if (filetype.startsWith("audio")) {
+      type = "ringtone";
+      loadRingtone(file);
+    } else if (filetype.startsWith("image")) {
+      type = "wallpaper";
+      loadWallpaper();
+    }
+    // else if(filetype.startsWith("video")){
+    //     type='status';
+    //     loadVideo(file);
+    // }
+  }
+
+  $("#upload").on("submit", function (e) {
+    e.preventDefault();
+    var data = new FormData();
+    data.append("file", file);
+    data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+    $.ajax({
+      method: "POST",
+      url: "/upload/",
+
+      processData: false,
+      contentType: false,
+      mimeType: "multipart/form-data",
+      data: data,
+      beforeSend: function () {
+        $("#prosubmit")
+          .html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                       width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                      <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                        s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                        c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                      <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                        C22.32,8.481,24.301,9.057,26.013,10.047z">
+                        <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 20 20"
+                          to="360 20 20"
+                          dur="0.9s"
+                          repeatCount="indefinite"/>
+                        </path>
+                      </svg>`);
+        $("#prosubmit").prop("disabled", true);
+      },
+      success: function (res) {
+        console.log("ok");
+      },
+      complete: function (data) {
+        $("#prosubmit").text("submit");
+        $("#prosubmit").prop("disabled", false);
+      },
+    });
+  });
+
+  function loadRingtone(file) {
+    let windowUrl = window.URL || window.webkitURL;
+    var playable = uploadPlayer.canPlayType(file.type);
+
+    if (windowUrl !== 0) {
+      switch (playable) {
+        case "maybe":
+        case "probably":
+        case "yes": {
+          var oUrl = windowUrl.createObjectURL(file);
+          uploadPlayer.src = oUrl;
+          uploadPlayer.addEventListener("loadeddata", function () {
+            hideFileSelectButton();
+            $(".waveform-wrap, .controls-wrap").css("display", "flex");
+            updateDuration();
+
+            if (uploadPlayer.duration > 35) {
+              right = (35 * 100) / uploadPlayer.duration;
+              rangeWidth = right - left;
+              maxRangeWidth = rangeWidth;
+              waveformProgress.setAttribute("width", maxRangeWidth);
+              rightEle.setAttribute("transform", `translate(${right - 4},0)`);
+            }
+
+            //create wave form
+            initWaveform();
+            var reader = new FileReader();
+            reader.onload = (e) => createWaveForm(e.target.result);
+            reader.readAsArrayBuffer(file);
+          });
+        }
+      }
+    }
+  }
+
+  function updateDuration() {
+    let duration = endTime() - startTime();
+    $("#duration").text(duration.toFixed(1));
+  }
+
+  function initWaveform() {
+    uploadPlayer.addEventListener("timeupdate", function () {
+      let xPosition =
+        (uploadPlayer.currentTime / uploadPlayer.duration) * 100.0;
+      lineProgress.setAttribute("x1", xPosition);
+      lineProgress.setAttribute("x2", xPosition);
+      if (xPosition >= right) {
+        uploadPlayer.currentTime = startTime();
+        if (uploadPlayer.paused) uploadPlayer.play();
+      }
+      updateDuration();
+    });
+
+    function updateCurrentTime() {
+      updateDuration();
+      uploadPlayer.currentTime = (left * uploadPlayer.duration) / 100.0;
+    }
+
+    var svg = document.getElementById("waveform-container");
+    ["mousedown", "touchstart"].forEach((eventName) =>
+      svg.addEventListener(eventName, startDrag)
+    );
+    ["mousemove", "touchmove"].forEach((eventName) =>
+      svg.addEventListener(eventName, drag)
+    );
+    ["mouseup", "mouseleave", "touchend", "touchleave", "touchcancel"].forEach(
+      (eventName) => svg.addEventListener(eventName, endDrag)
+    );
+
+    var selectedElement = false;
+
+    function startDrag(evt) {
+      if (evt.target.classList.contains("draggable")) {
+        if (evt.target.id == "waveform-progress") {
+          selectedElement = evt.target;
+          offset = getMousePosition(evt);
+          offset.x -= parseFloat(selectedElement.getAttributeNS(null, "x"));
+          offset.y -= parseFloat(selectedElement.getAttributeNS(null, "y"));
+        } else {
+          selectedElement = evt.target;
+          offset = getMousePosition(evt);
+          // Get all the transforms currently on this element
+          var transforms = selectedElement.transform.baseVal;
+          // Ensure the first transform is a translate transform
+          if (
+            transforms.length === 0 ||
+            transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE
+          ) {
+            // Create an transform that translates by (0, 0)
+            var translate = svg.createSVGTransform();
+            translate.setTranslate(0, 0);
+            // Add the translation to the front of the transforms list
+            selectedElement.transform.baseVal.insertItemBefore(translate, 0);
+          }
+          // Get initial translation amount
+          transform = transforms.getItem(0);
+          offset.x -= transform.matrix.e;
+          // offset.y -= transform.matrix.f;
+        }
+      }
+    }
+
+    function drag(evt) {
+      if (selectedElement) {
+        evt.preventDefault();
+
+        if (selectedElement.id == "left" || selectedElement.id == "right") {
+          var coord = getMousePosition(evt);
+          let xTransform = coord.x - offset.x;
+          if (selectedElement.id == "left") {
+            if (xTransform > 96) xTransform = 96;
+            else if (xTransform < 0) xTransform = 0;
+            left = xTransform;
+
+            if (right - left > maxRangeWidth) {
+              right = left + maxRangeWidth;
+              rightEle.setAttribute("transform", `translate(${right - 4},0)`);
+            }
+          }
+          if (selectedElement.id == "right") {
+            if (xTransform > 96) xTransform = 96;
+            else if (xTransform < 0) xTransform = 0;
+
+            right = xTransform + 4;
+
+            if (right - left > maxRangeWidth) {
+              left = right - maxRangeWidth;
+              leftEle.setAttribute("transform", `translate(${left},0)`);
+            }
+          }
+          rangeWidth = right - left;
+          waveformProgress.setAttribute("width", rangeWidth);
+          waveformProgress.setAttribute("x", left);
+          transform.setTranslate(xTransform, 0);
+          updateCurrentTime();
+        } else if (selectedElement.id == "waveform-progress") {
+          var coord = getMousePosition(evt);
+          let xPos = coord.x - offset.x;
+
+          if (xPos > 0 && xPos + rangeWidth < 100) {
+            selectedElement.setAttributeNS(null, "x", xPos);
+            left = xPos;
+            right = xPos + rangeWidth;
+            leftEle.setAttribute("transform", `translate(${left},0)`);
+            rightEle.setAttribute("transform", `translate(${right - 4},0)`);
+            uploadPlayer.currentTime = (left * uploadPlayer.duration) / 100;
+          }
+        }
+      }
+    }
+
+    function endDrag(evt) {
+      selectedElement = null;
+    }
+
+    function getMousePosition(evt) {
+      var CTM = svg.getScreenCTM();
+      if (evt.touches) {
+        evt = evt.touches[0];
+      }
+      return {
+        x: (evt.clientX - CTM.e) / CTM.a,
+        y: (evt.clientY - CTM.f) / CTM.d,
+      };
+    }
+  }
+
+  function createWaveForm(audioData) {
+    const NUMBER_OF_BUCKETS = 100; // number of "bars" the waveform should have
+    const SPACE_BETWEEN_BARS = 0.4; // from 0 (no gaps between bars) to 1 (only gaps - bars won't be visible)
+
+    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let audioElement = document.getElementById("audio-element");
+    // let audioData = response.data;
+    audioCtx.decodeAudioData(
+      audioData,
+      (buffer) => {
+        decodedAudioData = buffer.getChannelData(0);
+        let bucketDataSize = Math.floor(
+          decodedAudioData.length / NUMBER_OF_BUCKETS
+        );
+        let buckets = [];
+        for (var i = 0; i < NUMBER_OF_BUCKETS; i++) {
+          let startingPoint = i * bucketDataSize;
+          let endingPoint = i * bucketDataSize + bucketDataSize;
+          let max = 0;
+          for (var j = startingPoint; j < endingPoint; j++) {
+            if (decodedAudioData[j] > max) {
+              max = decodedAudioData[j];
+            }
+          }
+          let size = Math.abs(max);
+          buckets.push(size / 2);
+        }
+        document.getElementById("waveform-mask").innerHTML = buckets
+          .map((bucket, i) => {
+            let bucketSVGWidth = 100.0 / buckets.length;
+            let bucketSVGHeight = bucket * 100.0;
+            return `<rect
+                        x=${bucketSVGWidth * i + SPACE_BETWEEN_BARS / 2.0}
+                        y=${(100 - bucketSVGHeight) / 2.0}
+                        width=${bucketSVGWidth - SPACE_BETWEEN_BARS}
+                        height=${bucketSVGHeight} />`;
+          })
+          .join("");
+      },
+      (e) => {
+        // callback for any errors with decoding audio data
+        console.log("Error with decoding audio data" + e.err);
+      }
+    );
+  }
+
+  function hideFileSelectButton() {
+    document.getElementById("fileSelectButton").style.display = "none";
+    document.getElementById("uploadimg").style.display = "none";
+    $(".info-wrap").css("display", "flex");
+    $(".ringtone-wrap").css("display", "block");
+  }
+
+  $(function () {
+    var uploading = false;
+    $(".uploading").hide();
+    $("#upload").on("click", function (e) {
+      // e.preventDefault()
+      if (uploading) return;
+      uploading = true;
+      var data = {
+        title: $("#title").val().trim().replace(/\s+/g, " "),
+        tags: tags,
+      };
+      if (type === "ringtone") {
+        data.start = startTime();
+        data.end = endTime();
+      }
+
+      var message = null;
+      if (data.title.length == 0) {
+        message = "The title field is required.";
+      } else if (data.title.length < 3) {
+        message = "Title must be at least 3 characters long.";
+      } else if (data.title.length > 100) {
+        message = "Title cannot be longer than 100 characters.";
+      } else if (tags.length < 2) {
+        message = "Add at least 2 tags.";
+      }
+
+      if (message) {
+        uploading = false;
+        return $(".message").text(message).show();
+      }
+
+      // $("#upload").hide();
+      // $(".uploading").show();
+      // $("#dots-loader").show();
+
+      this.disabled = true;
+      var url = "/upload/";
+      var xhr = new XMLHttpRequest();
+
+      var formData = new FormData();
+      xhr.open("POST", url, true);
+
+      xhr.addEventListener("readystatechange", function (e) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          window.location.replace(xhr.responseText);
+        } else if (xhr.readyState == 4 && xhr.status != 200) {
+          $(".message").text("Something went wrong!").show();
+          $("#upload").show();
+          $(".uploading").hide();
+          $("#dots-loader").hide();
+          // Error. Inform the user
+        }
+      });
+
+      formData.append("media", file);
+      formData.append("data", JSON.stringify(data));
+      xhr.send(formData);
+    });
+
+    $("#playToggle").on("click", function () {
+      uploadPlayer.currentTime = startTime();
+      if (uploadPlayer.paused) {
+        uploadPlayer.play();
+        this.firstChild.data = "Pause";
+      } else {
+        uploadPlayer.pause();
+        this.firstChild.data = "Play";
+      }
+    });
+
+    var addTag = function () {
+      var text = $("#tag")
+        .val()
+        .toLowerCase()
+        .replace(/,/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (text && text.length > 2 && text.length <= 100) {
+        $("#tag").val("");
+        if (tags.indexOf(text) == -1) {
+          tags.push(text);
+          $(".tags").append($("<span/>").text(text));
+        }
+      }
+    };
+
+    $("#addTag").on("click", addTag);
+
+    $("#tag").keypress(function (e) {
+      if (e.which == 13) {
+        addTag();
+        return false;
+      }
+    });
+
+    $(".tags").on("click", "span", function () {
+      let tag = $(this).text();
+      tags = tags.filter((e) => e !== tag);
+      $(this).remove();
+    });
+  });
+
+  //         $('#upload').on("submit" , function(e){
+  //    e.preventDefault()
+  //    var data = new FormData()
+  //    data.append("file", file)
+  //    data.append("csrfmiddlewaretoken","{{ csrf_token }}")
+
+  //        $.ajax({
+  //            method:'POST',
+  //            url: '/upload/',
+
+  //            processData: false,
+  //            contentType: false,
+  //            mimeType:"multipart/form-data",
+  //            data:data,
+  //            beforeSend: function() {
+  //              $('#prosubmit').html(`<svg style="vertical-align: bottom;" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  //                    width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+  //                   <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+  //                     s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+  //                     c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+  //                   <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+  //                     C22.32,8.481,24.301,9.057,26.013,10.047z">
+  //                     <animateTransform attributeType="xml"
+  //                       attributeName="transform"
+  //                       type="rotate"
+  //                       from="0 20 20"
+  //                       to="360 20 20"
+  //                       dur="0.9s"
+  //                       repeatCount="indefinite"/>
+  //                     </path>
+  //                   </svg>`)
+  //                   $('#prosubmit').prop('disabled', true);
+  //            },
+  //            success:function(res) {
+  //                console.log("ok")
+
+  //            },
+  //            complete:function(data){
+  //                $('#prosubmit').text("submit")
+  //                $('#prosubmit').prop('disabled', false);
+
+  //                }
+
+  //        })
+  //    })
+
+  //
+</script>
+
+{%endblock body%}
